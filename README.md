@@ -1,6 +1,6 @@
 ## About
 
-lockf.rb is a Ruby library that provides a Ruby-esque interface to
+lockf.rb is a Ruby library that provides a Ruby interface to
 the POSIX function [lockf](https://man7.org/linux/man-pages/man3/lockf.3.html) -
 and provides a low-level interface that can be used to call the function directly.
 lockf can be used to lock part of, or all of a file.
