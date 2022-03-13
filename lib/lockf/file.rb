@@ -10,7 +10,7 @@ class Lock::File
   attr_reader :file
 
   ##
-  # @param [File, TempFile, #fileno]
+  # @param [File, TempFile, #fileno] file
   #  The file on which a lock will be placed.
   #
   # @param [Integer] len
