@@ -1,0 +1,21 @@
+##
+# Plugins
+require:
+  - standard
+
+##
+# Defaults: standard-rb
+inherit_gem:
+  standard: config/base.yml
+
+##
+# Disabled cops
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+Layout/ArgumentAlignment:
+  Enabled: false
+
+##
+# Options for all cops.
+AllCops:
+  TargetRubyVersion: 2.7
