@@ -1,20 +1,70 @@
+##
+# The {Lock::File Lock::File} class implements record locking on top of
+# the POSIX function: lockf.
 class Lock::File
   include Lock::FFI
 
+  ##
+  # @return [File, Tempfile, #fileno]
+  #  Returns the underlying file.
+  attr_reader :file
+
+  ##
+  # @param [File, TempFile, #fileno]
+  #  The file on which a lock will be placed.
+  #
+  # @param [Integer] len
+  #  The number of bytes to lock. <br>
+  #  A value of `0`` covers the entire file.
+  #
+  # @return [Lock::File]
+  #  Returns an instance of {Lock::File Lock::File}.
   def initialize(file, len = 0)
     @file = file
     @len = len
     @open_lock = false
   end
 
-  def lock
+  ##
+  # Obtains a lock. <br>
+  # This method blocks when another process already
+  # holds the lock.
+  #
+  # @return [Integer]
+  def obtain
     lockf(@file.fileno, Lock::F_LOCK, @len)
   end
 
-  def lock_nonblock
+  ##
+  # Obtains a lock. <br>
+  # This method does not block when another process already
+  # holds the lock.
+  #
+  # @raise [Errno::EWOULDBLOCK]
+  #  When obtaining a lock would block.
+  #
+  # @return [Integer]
+  def obtain_nonblock
     lockf(@file.fileno, Lock::F_TLOCK, @len)
   end
 
+  ##
+  # Obtains a lock, yields a block, and then releases the lock. <br>
+  # This method also re-uses the same lock when calls to the
+  # method are nested - for example:
+  #
+  # @example
+  #  lock.synchronize { lock.synchronize { .. } }
+  #
+  # @param [Boolean] nonblock
+  #  Determines if the lock will be obtained with #{obtain} or
+  #  {#obtain_nonblock}.
+  #
+  # @raise [Errno::EWOULDBLOCK]
+  #  When "nonblock" is set to true, and obtaining the lock would
+  #  block.
+  #
+  # @return
   def synchronize(nonblock: false)
     return yield if @open_lock
     begin
@@ -27,26 +77,22 @@ class Lock::File
     end
   end
 
+  ##
+  # Releases the lock.
+  #
+  # @return [Integer]
   def release
     lockf(@file.fileno, Lock::F_ULOCK, @len)
   end
 
+  ##
+  # Returns true when the lock is held by another process.
+  #
+  # @return [Boolean]
   def locked?
     lockf(@file.fileno, Lock::F_TEST, @len)
     false
   rescue Errno::EACCES
     true
-  end
-
-  def method_missing(m, *args, &b)
-    if @file.respond_to?(m)
-      @file.public_send(m, *args, &b)
-    else
-      super
-    end
-  end
-
-  def respond_to_missing?(m, include_all = false)
-    @file.respond_to?(m, false)
   end
 end

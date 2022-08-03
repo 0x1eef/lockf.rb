@@ -3,10 +3,11 @@ require_relative "setup"
 RSpec.describe "Lockf#lockf" do
   include Timeout
 
-  let(:f) { Lock::File.new(Tempfile.new("lockf-test_file").tap(&:unlink), 0) }
+  let(:file) { Tempfile.new("lockf-test_file").tap(&:unlink) }
+  let(:lock) { Lock::File.new(file, 0) }
 
   after do
-    f.close
+    lock.file.close
   end
 
   exit_on = ->(ex, code: 42, &b) do
@@ -16,16 +17,16 @@ RSpec.describe "Lockf#lockf" do
   end
 
   describe "F_LOCK" do
-    subject(:lock) { f.lock }
-    before { lock }
-    after { f.release }
+    subject(:obtain_lock) { lock.obtain }
+    before { obtain_lock }
+    after { lock.release }
 
     context "when a lock is acquired" do
       it { is_expected.to be_zero }
     end
 
     context "when a second lock is attempted by a fork" do
-      subject(:pid) { fork { f.lock } }
+      subject(:pid) { fork { lock.obtain } }
       after { Process.kill("SIGKILL", pid) }
 
       it "blocks the fork" do
@@ -37,9 +38,9 @@ RSpec.describe "Lockf#lockf" do
   end
 
   describe "F_TLOCK" do
-    subject(:lock) { f.lock_nonblock }
-    before { lock }
-    after { f.release }
+    subject(:obtain_lock) { lock.obtain_nonblock }
+    before { obtain_lock }
+    after { lock.release }
 
     context "when a lock is acquired" do
       it { is_expected.to be_zero }
@@ -47,36 +48,36 @@ RSpec.describe "Lockf#lockf" do
 
     context "when a second lock is attempted by a fork" do
       subject { Process.wait2(pid).last.exitstatus }
-      let(:pid) { fork { exit_on.call(Errno::EAGAIN) { f.lock_nonblock } } }
+      let(:pid) { fork { exit_on.call(Errno::EAGAIN) { lock.obtain_nonblock } } }
       it { is_expected.to eq(42) }
     end
   end
 
   describe "F_TEST" do
-    let(:lock) { f.lock }
-    before { lock }
-    after { f.release }
+    let(:obtain_lock) { lock.obtain }
+    before { obtain_lock }
+    after { lock.release }
 
     context "when a lock wouldn't block" do
-      subject { f.locked? }
+      subject { lock.locked? }
       it { is_expected.to be(false) }
     end
 
     context "when a second lock would block" do
       subject { Process.wait2(pid).last.exitstatus }
-      let(:pid) { fork { f.locked? and exit(42) } }
+      let(:pid) { fork { lock.locked? and exit(42) } }
       it { is_expected.to eq(42) }
     end
   end
 
   describe "F_ULOCK" do
-    let(:lock) { f.lock }
-    before { lock }
+    let(:obtain_lock) { lock.obtain }
+    before { obtain_lock }
 
     context "when a lock is acquired, and then removed" do
       subject { Process.wait2(pid).last.exitstatus }
-      let(:unlock) { f.release }
-      let(:pid) { fork { f.locked?.then { exit(42) } } }
+      let(:unlock) { lock.release }
+      let(:pid) { fork { lock.locked?.then { exit(42) } } }
       before { lock.then { unlock } }
       it { is_expected.to eq(42) }
     end
