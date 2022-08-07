@@ -5,7 +5,7 @@ the POSIX function: [lockf](https://man7.org/linux/man-pages/man3/lockf.3.html) 
 lockf can be used to lock part of, or all of a file.
 
 lockf can be used to not only synchronize access to the
-file it places a lock on - it can be used to synchronize
+file it places a lock on - it can also be used to synchronize
 access to any shared resource that is being accessed by mutliple processes at the same time.
 
 
