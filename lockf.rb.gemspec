@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.files = `git ls-files`.split($/)
   gem.require_paths = ["lib"]
   gem.extensions = %w[ext/lockf.rb/extconf.rb]
-  gem.summary = "A Ruby library that provides a Ruby interface to the POSIX function - lockf()"
+  gem.summary = "lockf.rb is a Ruby library that provides a Ruby-esque interface to the POSIX function: lockf()"
   gem.description = gem.summary
   gem.add_development_dependency "yard", "~> 0.9"
   gem.add_development_dependency "redcarpet", "~> 3.5"
