@@ -10,7 +10,7 @@ accessed by mutliple processes at the same time.
 
 ## Examples
 
-### Locking
+### Lock
 
 #### `#obtain`
 
