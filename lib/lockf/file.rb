@@ -28,7 +28,7 @@ class Lock::File
   ##
   # Obtains a lock. <br>
   # This method blocks when another process already
-  # holds the lock.
+  # holds a lock.
   #
   # @return [Integer]
   def obtain
@@ -38,7 +38,7 @@ class Lock::File
   ##
   # Obtains a lock. <br>
   # This method does not block when another process already
-  # holds the lock.
+  # holds a lock.
   #
   # @raise [Errno::EWOULDBLOCK]
   #  When obtaining a lock would block.
@@ -57,11 +57,11 @@ class Lock::File
   #  lock.synchronize { lock.synchronize { .. } }
   #
   # @param [Boolean] nonblock
-  #  Determines if the lock will be obtained with #{obtain} or
+  #  Determines if a lock will be obtained with #{obtain} or
   #  {#obtain_nonblock}.
   #
   # @raise [Errno::EWOULDBLOCK]
-  #  When "nonblock" is set to true, and obtaining the lock would
+  #  When "nonblock" is set to true, and obtaining a lock would
   #  block.
   #
   # @return
@@ -78,7 +78,7 @@ class Lock::File
   end
 
   ##
-  # Releases the lock.
+  # Releases a lock.
   #
   # @return [Integer]
   def release
@@ -86,7 +86,7 @@ class Lock::File
   end
 
   ##
-  # Returns true when the lock is held by another process.
+  # Returns true when a lock is held by another process.
   #
   # @return [Boolean]
   def locked?

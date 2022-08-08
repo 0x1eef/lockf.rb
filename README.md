@@ -16,7 +16,7 @@ accessed by mutliple processes at the same time.
 
 The following example demonstrates the `Lock::File#obtain` method, and
 how after a parent process obtains a lock the child process is blocked until
-the parent process releases the lock - only then can the lock can be obtained
+the parent process releases the lock - only then can a lock can be obtained
 by the child process:
 
 ```ruby
