@@ -68,7 +68,7 @@ class Lock::File
   def synchronize(nonblock: false)
     return yield if @open_lock
     begin
-      nonblock ? lock_nonblock : lock
+      nonblock ? obtain_nonblock : obtain
       @open_lock = true
       yield
     ensure
