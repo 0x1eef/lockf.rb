@@ -10,6 +10,11 @@ accessed by mutliple processes at the same time.
 
 ## Examples
 
+
+The examples provide a brief introduction - and don't cover everything. The [API documentation](https://0x1eef.github.io/x/lockf.rb)
+is available as a complete reference - and covers parts of the interface not
+covered by the examples.
+
 ### Lock
 
 #### `#obtain`
