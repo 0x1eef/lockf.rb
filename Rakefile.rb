@@ -4,7 +4,7 @@ require "bundler/gem_tasks"
 namespace :linters do
   desc "Run the C linter"
   task :c do
-    sh "uncrustify -c - --no-backup --replace ext/lockf.rb/*.c"
+    sh "uncrustify -c .uncrustify.cfg --no-backup --replace ext/lockf.rb/*.c"
   end
 
   desc "Run the Ruby linter"
