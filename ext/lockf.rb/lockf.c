@@ -25,10 +25,11 @@ lockf_lock(VALUE self, VALUE fd, VALUE cmd, VALUE len)
 void
 Init_lockf(void)
 {
-  VALUE mLock, mFFI;
+  VALUE mLock, mFFI, mFile;
 
   mLock = rb_define_module("Lock");
-  mFFI = rb_const_get(mLock, rb_intern("FFI"));
+  mFile = rb_const_get(mLock, rb_intern("File"));
+  mFFI = rb_const_get(mFile, rb_intern("FFI"));
   rb_define_const(mLock, "F_LOCK", INT2NUM(F_LOCK));
   rb_define_const(mLock, "F_TLOCK", INT2NUM(F_TLOCK));
   rb_define_const(mLock, "F_ULOCK", INT2NUM(F_ULOCK));

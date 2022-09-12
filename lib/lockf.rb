@@ -4,7 +4,6 @@
 # and provides a low-level interface that can be used to call the function
 # directly.
 module Lock
-  require_relative "lockf/ffi"
   require_relative "lockf/file"
-  require_relative "lockf/version"
+  require_relative "lockf/file/version"
 end

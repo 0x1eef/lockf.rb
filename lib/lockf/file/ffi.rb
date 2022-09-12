@@ -1,14 +1,14 @@
 ##
-# The {Lock::FFI Lock::FFI} module provides a one-to-one
+# The {Lock::File::FFI Lock::File::FFI} module provides a one-to-one
 # mapping to the POSIX function **lockf**.
-module Lock::FFI
+module Lock::File::FFI
   require "lockf/lockf.rb.so"
   ##
   # @!method lockf
   #   A low-level interface to the POSIX function **lockf**.
   #
   #   @example
-  #     Lock::FFI.lockf(5, Lock::F_LOCK, 0)
+  #     Lock::File::FFI.lockf(5, Lock::F_LOCK, 0)
   #   @param [Integer] fd
   #     The file descriptor.
   #   @param [Integer] cmd
