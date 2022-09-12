@@ -5,12 +5,10 @@ module Lock::FFI
   require "lockf/lockf.rb.so"
   ##
   # @!method lockf
-  #
   #   A low-level interface to the POSIX function **lockf**.
   #
   #   @example
   #     Lock::FFI.lockf(5, Lock::F_LOCK, 0)
-  #
   #   @param [Integer] fd
   #     The file descriptor.
   #   @param [Integer] cmd
