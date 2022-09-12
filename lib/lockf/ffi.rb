@@ -1,11 +1,15 @@
 ##
 # The {Lock::FFI Lock::FFI} module provides a one-to-one
-# mapping to the POSIX function *lockf*.
+# mapping to the POSIX function **lockf**.
 module Lock::FFI
   require "lockf/lockf.rb.so"
   ##
   # @!method lockf
-  #   A low-level interface to the POSIX function *lockf*.
+  #
+  #   A low-level interface to the POSIX function **lockf**.
+  #
+  #   @example
+  #     Lock::FFI.lockf(5, Lock::F_LOCK, 0)
   #
   #   @param [Integer] fd
   #     The file descriptor.
@@ -18,7 +22,8 @@ module Lock::FFI
   #   @param [Integer] len
   #     The number of bytes.
   #   @raise [SystemCallError]
-  #     A number of Errno exceptions can be raised. See the man pages for details.
+  #     A number of Errno exceptions can be raised. <br>
+  #     See the man pages for details.
   #   @return [Integer]
   #     Returns 0 when successful.
   #   @see (https://man7.org/linux/man-pages/man3/lockf.3.html) lockf man page (Linux)

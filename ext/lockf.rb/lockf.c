@@ -33,5 +33,5 @@ Init_lockf(void)
   rb_define_const(mLock, "F_TLOCK", INT2NUM(F_TLOCK));
   rb_define_const(mLock, "F_ULOCK", INT2NUM(F_ULOCK));
   rb_define_const(mLock, "F_TEST", INT2NUM(F_TEST));
-  rb_define_method(mFFI, "lockf", lockf_lock, 3);
+  rb_define_module_function(mFFI, "lockf", lockf_lock, 3);
 }

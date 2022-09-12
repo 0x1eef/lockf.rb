@@ -14,9 +14,10 @@ namespace :linters do
 end
 
 Rake::ExtensionTask.new("lockf.rb")
-Rake::Task["compile"].enhance do
-  cp File.join(__dir__, "lib", "lockf.rb.so"),
+mv_proc = proc do
+  mv File.join(__dir__, "lib", "lockf.rb.so"),
      File.join(__dir__, "lib", "lockf")
 end
-
+Rake::Task["compile"].enhance(&mv_proc)
+Rake::Task["compile:lockf.rb"].enhance(&mv_proc)
 task lint: ["linters:c", "linters:ruby"]
