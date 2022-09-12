@@ -8,15 +8,15 @@ module Lock::File::FFI
   #   A low-level interface to the POSIX function **lockf**.
   #
   #   @example
-  #     Lock::File::FFI.lockf(5, Lock::F_LOCK, 0)
+  #     Lock::File::FFI.lockf(5, Lock::File::F_LOCK, 0)
   #   @param [Integer] fd
   #     The file descriptor.
   #   @param [Integer] cmd
   #     An integer represented by one of the following constants:
-  #       * {Lock::F_LOCK}
-  #       * {Lock::F_TLOCK}
-  #       * {Lock::F_ULOCK}
-  #       * {Lock::F_TEST}
+  #       * {Lock::File::F_LOCK}
+  #       * {Lock::File::F_TLOCK}
+  #       * {Lock::File::F_ULOCK}
+  #       * {Lock::File::F_TEST}
   #   @param [Integer] len
   #     The number of bytes.
   #   @raise [SystemCallError]

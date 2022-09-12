@@ -30,9 +30,9 @@ Init_lockf(void)
   mLock = rb_define_module("Lock");
   mFile = rb_const_get(mLock, rb_intern("File"));
   mFFI = rb_const_get(mFile, rb_intern("FFI"));
-  rb_define_const(mLock, "F_LOCK", INT2NUM(F_LOCK));
-  rb_define_const(mLock, "F_TLOCK", INT2NUM(F_TLOCK));
-  rb_define_const(mLock, "F_ULOCK", INT2NUM(F_ULOCK));
-  rb_define_const(mLock, "F_TEST", INT2NUM(F_TEST));
+  rb_define_const(mFile, "F_LOCK", INT2NUM(F_LOCK));
+  rb_define_const(mFile, "F_TLOCK", INT2NUM(F_TLOCK));
+  rb_define_const(mFile, "F_ULOCK", INT2NUM(F_ULOCK));
+  rb_define_const(mFile, "F_TEST", INT2NUM(F_TEST));
   rb_define_module_function(mFFI, "lockf", lockf_lock, 3);
 }

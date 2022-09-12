@@ -6,12 +6,12 @@ class Lock::File
   include Lock::File::FFI
 
   ##
-  # @return [File, Tempfile, #fileno]
+  # @return [<File, Tempfile, #fileno>]
   #  Returns the underlying file.
   attr_reader :file
 
   ##
-  # @param [File, TempFile, #fileno] file
+  # @param [<File, TempFile, #fileno>] file
   #  The file on which a lock will be placed.
   #
   # @param [Integer] len
@@ -33,7 +33,7 @@ class Lock::File
   #
   # @return [Integer]
   def obtain
-    lockf(@file.fileno, Lock::F_LOCK, @len)
+    lockf(@file.fileno, F_LOCK, @len)
   end
 
   ##
@@ -46,7 +46,7 @@ class Lock::File
   #
   # @return [Integer]
   def obtain_nonblock
-    lockf(@file.fileno, Lock::F_TLOCK, @len)
+    lockf(@file.fileno, F_TLOCK, @len)
   end
 
   ##
@@ -83,7 +83,7 @@ class Lock::File
   #
   # @return [Integer]
   def release
-    lockf(@file.fileno, Lock::F_ULOCK, @len)
+    lockf(@file.fileno, F_ULOCK, @len)
   end
 
   ##
@@ -91,7 +91,7 @@ class Lock::File
   #
   # @return [Boolean]
   def locked?
-    lockf(@file.fileno, Lock::F_TEST, @len)
+    lockf(@file.fileno, F_TEST, @len)
     false
   rescue Errno::EACCES
     true
