@@ -6,4 +6,5 @@
 module Lock
   require_relative "lockf/ffi"
   require_relative "lockf/file"
+  require_relative "lockf/version"
 end
