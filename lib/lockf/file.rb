@@ -93,7 +93,7 @@ class Lock::File
   def locked?
     lockf(@file.fileno, F_TEST, @len)
     false
-  rescue Errno::EACCES
+  rescue Errno::EACCES, Errno::EAGAIN
     true
   end
 end
