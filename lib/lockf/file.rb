@@ -16,7 +16,7 @@ class Lock::File
   #
   # @param [Integer] len
   #  The number of bytes to lock. <br>
-  #  A value of `0`` covers the entire file.
+  #  A value of "0" covers the entire file.
   #
   # @return [Lock::File]
   #  Returns an instance of {Lock::File Lock::File}.
@@ -28,8 +28,11 @@ class Lock::File
 
   ##
   # Obtains a lock. <br>
-  # This method blocks when another process already
-  # holds a lock.
+  # This method blocks when another process already holds a lock.
+  #
+  # @raise [SystemCallError]
+  #   A number of Errno exceptions can be raised. <br>
+  #   Consult your system's lockf man page for details.
   #
   # @return [Integer]
   def obtain
@@ -38,11 +41,12 @@ class Lock::File
 
   ##
   # Obtains a lock. <br>
-  # This method does not block when another process already
-  # holds a lock.
+  # This method does not block when another process already holds a lock.
   #
-  # @raise [Errno::EWOULDBLOCK]
+  # @raise [Errno::EAGAIN, Errno::EWOULDBLOCK]
   #  When obtaining a lock would block.
+  #
+  # @raise (see Lock::File#obtain)
   #
   # @return [Integer]
   def obtain_nonblock
@@ -51,19 +55,19 @@ class Lock::File
 
   ##
   # Obtains a lock, yields a block, and then releases the lock. <br>
-  # This method also re-uses the same lock when calls to the
-  # method are nested - for example:
+  # This method re-uses the same lock when calls to the method are nested -
+  # for example:
   #
   # @example
   #  lock.synchronize { lock.synchronize { .. } }
   #
   # @param [Boolean] nonblock
-  #  Determines if a lock will be obtained with #{obtain} or
-  #  {#obtain_nonblock}.
+  #  Determines if a lock will be obtained using #{obtain} or {#obtain_nonblock}.
   #
   # @raise [Errno::EWOULDBLOCK]
-  #  When "nonblock" is set to true, and obtaining a lock would
-  #  block.
+  #  When "nonblock" is set to true, and obtaining a lock would block.
+  #
+  # @raise (see Lock::File#obtain)
   #
   # @return
   def synchronize(nonblock: false)
@@ -80,7 +84,7 @@ class Lock::File
 
   ##
   # Releases a lock.
-  #
+  # @raise (see Lock::File#obtain)
   # @return [Integer]
   def release
     lockf(@file.fileno, F_ULOCK, @len)
@@ -88,7 +92,6 @@ class Lock::File
 
   ##
   # Returns true when a lock is held by another process.
-  #
   # @return [Boolean]
   def locked?
     lockf(@file.fileno, F_TEST, @len)
