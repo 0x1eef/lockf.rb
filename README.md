@@ -2,7 +2,7 @@
 
 lockf.rb is a Ruby library that provides a high-level interface to
 the POSIX function [lockf](https://man7.org/linux/man-pages/man3/lockf.3.html).
-The function can be called directly through a low-level interface as well. 
+A low-level interface for calling the function directly is provided as well. 
 The lockf function can synchronize access to part of, or all of a file - 
 and is implemented as an advisory lock.
 
