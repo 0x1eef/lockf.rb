@@ -95,11 +95,19 @@ lock.obtain
 # Lock 2 obtained
 ```
 
-## <a id='INSTALL'>Install</a>
+## Install
 
-lockf.rb is available as a RubyGem.
+lockf.rb is distributed as a RubyGem through its git repositories. <br>
+[GitHub](https://github.com/0x1eef/lockf.rb),
+and
+[GitLab](https://gitlab.com/0x1eef/lockf.rb)
+are available as sources.
 
-    gem install lockf.rb
+### Gemfile
+
+```ruby
+gem "lockf.rb", git: "https://github.com/0x1eef/lockf.rb.git", tag: "v0.5.1"
+```
 
 ## License
 
