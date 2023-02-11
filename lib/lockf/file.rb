@@ -23,7 +23,6 @@ class Lock::File
   def initialize(file, len = 0)
     @file = file
     @len = len
-    @open_lock = false
   end
 
   ##
@@ -51,35 +50,6 @@ class Lock::File
   # @return [Integer]
   def obtain_nonblock
     lockf(@file.fileno, F_TLOCK, @len)
-  end
-
-  ##
-  # Obtains a lock, yields a block, and then releases the lock. <br>
-  # This method re-uses the same lock when calls to the method are nested -
-  # for example:
-  #
-  # @example
-  #  lock.synchronize { lock.synchronize { .. } }
-  #
-  # @param [Boolean] nonblock
-  #  Determines if a lock will be obtained using #{obtain} or {#obtain_nonblock}.
-  #
-  # @raise [Errno::EWOULDBLOCK]
-  #  When "nonblock" is set to true, and obtaining a lock would block.
-  #
-  # @raise (see Lock::File#obtain)
-  #
-  # @return
-  def synchronize(nonblock: false)
-    return yield if @open_lock
-    begin
-      nonblock ? obtain_nonblock : obtain
-      @open_lock = true
-      yield
-    ensure
-      release
-      @open_lock = false
-    end
   end
 
   ##
