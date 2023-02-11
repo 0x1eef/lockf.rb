@@ -12,10 +12,10 @@ class Lock::File
 
   ##
   # @param [<File, TempFile, #fileno>] file
-  #  The file on which a lock will be placed.
+  #  The file to place a lock on.
   #
   # @param [Integer] len
-  #  The number of bytes to lock. <br>
+  #  The number of bytes from +file+ to place a lock on.
   #  A value of "0" covers the entire file.
   #
   # @return [Lock::File]
@@ -26,43 +26,35 @@ class Lock::File
   end
 
   ##
-  # Obtains a lock. <br>
-  # This method blocks when another process already holds a lock.
-  #
-  # @raise [SystemCallError]
-  #   A number of Errno exceptions can be raised. <br>
-  #   Consult your system's lockf man page for details.
+  # Acquire a lock (blocking)
   #
   # @return [Integer]
-  def obtain
+  def lock
     lockf(@file.fileno, F_LOCK, @len)
   end
 
   ##
-  # Obtains a lock. <br>
-  # This method does not block when another process already holds a lock.
+  # Acquire a lock (non-blocking)
   #
-  # @raise [Errno::EAGAIN, Errno::EWOULDBLOCK]
-  #  When obtaining a lock would block.
-  #
-  # @raise (see Lock::File#obtain)
+  # @raise [Errno::EAGAIN]
+  #  When acquiring a lock would block.
   #
   # @return [Integer]
-  def obtain_nonblock
+  def lock_nonblock
     lockf(@file.fileno, F_TLOCK, @len)
   end
 
   ##
-  # Releases a lock.
-  # @raise (see Lock::File#obtain)
+  # Release a lock
+  #
   # @return [Integer]
   def release
     lockf(@file.fileno, F_ULOCK, @len)
   end
 
   ##
-  # Returns true when a lock is held by another process.
   # @return [Boolean]
+  #  Returns true when a lock has been acquired.
   def locked?
     lockf(@file.fileno, F_TEST, @len)
     false

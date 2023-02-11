@@ -17,7 +17,7 @@ RSpec.describe "Lockf#lockf" do
   end
 
   describe "F_LOCK" do
-    subject(:obtain_lock) { lock.obtain }
+    subject(:obtain_lock) { lock.lock }
     before { obtain_lock }
     after { lock.release }
 
@@ -26,7 +26,7 @@ RSpec.describe "Lockf#lockf" do
     end
 
     context "when a second lock is attempted by a fork" do
-      subject(:pid) { fork { lock.obtain } }
+      subject(:pid) { fork { lock.lock } }
       after { Process.kill("SIGKILL", pid) }
 
       it "blocks the fork" do
@@ -38,7 +38,7 @@ RSpec.describe "Lockf#lockf" do
   end
 
   describe "F_TLOCK" do
-    subject(:obtain_lock) { lock.obtain_nonblock }
+    subject(:obtain_lock) { lock.lock_nonblock }
     before { obtain_lock }
     after { lock.release }
 
@@ -48,13 +48,13 @@ RSpec.describe "Lockf#lockf" do
 
     context "when a second lock is attempted by a fork" do
       subject { Process.wait2(pid).last.exitstatus }
-      let(:pid) { fork { exit_on.call(Errno::EAGAIN) { lock.obtain_nonblock } } }
+      let(:pid) { fork { exit_on.call(Errno::EAGAIN) { lock.lock_nonblock } } }
       it { is_expected.to eq(42) }
     end
   end
 
   describe "F_TEST" do
-    let(:obtain_lock) { lock.obtain }
+    let(:obtain_lock) { lock.lock }
     before { obtain_lock }
     after { lock.release }
 
@@ -71,7 +71,7 @@ RSpec.describe "Lockf#lockf" do
   end
 
   describe "F_ULOCK" do
-    let(:obtain_lock) { lock.obtain }
+    let(:obtain_lock) { lock.lock }
     before { obtain_lock }
 
     context "when a lock is acquired, and then removed" do
