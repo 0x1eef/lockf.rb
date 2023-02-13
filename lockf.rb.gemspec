@@ -3,13 +3,13 @@ Gem::Specification.new do |gem|
   gem.name = "lockf.rb"
   gem.authors = ["0x1eef"]
   gem.email = ["0x1eef@protonmail.com"]
-  gem.homepage = "https://github.com/0x1eef/lockf.rb"
+  gem.homepage = "https://github.com/0x1eef/lockf.rb#readme"
   gem.version = Lock::File::VERSION
-  gem.licenses = ["MIT"]
+  gem.licenses = ["0BSD"]
   gem.files = `git ls-files`.split($/)
   gem.require_paths = ["lib"]
   gem.extensions = %w[ext/lockf.rb/extconf.rb]
-  gem.summary = "lockf.rb provides an interface to the POSIX function: lockf."
+  gem.summary = "A Ruby interface for lockf(3)"
   gem.description = gem.summary
   gem.add_development_dependency "yard", "~> 0.9"
   gem.add_development_dependency "redcarpet", "~> 3.5"

@@ -1,11 +1,11 @@
 ##
 # The {Lock::File::FFI Lock::File::FFI} module provides a one-to-one
-# mapping to the POSIX function **lockf**.
+# mapping to the C function **lockf**.
 module Lock::File::FFI
   require "lockf/lockf.rb.so"
   ##
   # @!method lockf
-  #   A low-level interface to the POSIX function **lockf**.
+  #   A low-level interface to the C function **lockf**.
   #
   #   @example
   #     Lock::File::FFI.lockf(5, Lock::File::F_LOCK, 0)
@@ -24,7 +24,7 @@ module Lock::File::FFI
   #     The number of bytes.
   #
   #   @raise (see Lock::File#obtain)
-  #   .
+  #
   #   @return [Integer]
   #     Returns 0 when successful.
   #

@@ -54,7 +54,7 @@ class Lock::File
 
   ##
   # @return [Boolean]
-  #  Returns true when a lock has been acquired.
+  #  Returns true when a lock has been acquired by another process.
   def locked?
     lockf(@file.fileno, F_TEST, @len)
     false
