@@ -30,7 +30,11 @@ class Lock::File
   #
   # @return [Integer]
   def lock
+    attempts ||= 0
     lockf(@file.fileno, F_LOCK, @len)
+  rescue Errno::EINTR => ex
+    attempts += 1
+    (attempts == 3 ? raise(ex) : retry)
   end
 
   ##
