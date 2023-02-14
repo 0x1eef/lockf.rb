@@ -1,13 +1,13 @@
 ##
-# The {Lock::File Lock::File} class implements record locking through
-# the POSIX function: lockf.
+# The [`Lock::File`](#apidocs) class provides a Ruby-oriented interface to
+# [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 class Lock::File
   require_relative "ffi"
   include Lock::FFI
 
   ##
   # @return [<File, Tempfile, #fileno>]
-  #  Returns the underlying file.
+  #  Returns a file object.
   attr_reader :file
 
   ##
@@ -15,7 +15,7 @@ class Lock::File
   #  The file to place a lock on.
   #
   # @param [Integer] len
-  #  The number of bytes from +file+ to place a lock on.
+  #  The number of bytes to place a lock on.
   #  A value of "0" covers the entire file.
   #
   # @return [Lock::File]
@@ -27,7 +27,10 @@ class Lock::File
 
   ##
   # Acquire a lock (blocking)
-  #
+  # @raise [Errno::EBADF]
+  # @raise [Errno::EDEADLK]
+  # @raise [Errno::EINTR]
+  # @raise [Errno::ENOLCK]
   # @return [Integer]
   def lock
     attempts ||= 0
@@ -39,10 +42,10 @@ class Lock::File
 
   ##
   # Acquire a lock (non-blocking)
-  #
   # @raise [Errno::EAGAIN]
-  #  When acquiring a lock would block.
-  #
+  # @raise [Errno::EBADF]
+  # @raise [Errno::ENOLCK]
+  # @raise [Errno::EINVAL]
   # @return [Integer]
   def lock_nonblock
     lockf(@file.fileno, F_TLOCK, @len)
@@ -50,7 +53,8 @@ class Lock::File
 
   ##
   # Release a lock
-  #
+  # @raise [Errno::EBADF]
+  # @raise [Errno::ENOLCK]
   # @return [Integer]
   def release
     lockf(@file.fileno, F_ULOCK, @len)
