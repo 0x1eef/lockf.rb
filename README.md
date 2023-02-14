@@ -5,10 +5,15 @@ lockf.rb is a C extension that provides a Ruby interface to
 
 ## Examples
 
-### Blocking lock
+### Lock::File
+
+The [`Lock::File`](#apidocs) class provides a Ruby-oriented interface to
+[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
+
+#### Blocking lock
 
 The `Lock::File#lock` method can be used to acquire a lock. The method will
-block when the lock is held by another process who acquired it beforehand:
+block when another process has acquired a lock beforehand:
 
 ```ruby
 require "lockf"
@@ -34,11 +39,11 @@ file.close
 # Lock acquired by child process (2023-02-11 16:43:18 UTC)
 ```
 
-### Non-blocking lock
+#### Non-blocking lock
 
 The `Lock::File#lock_nonblock` method can be used to acquire a lock
-in a non-blocking manner. If it is found that acquiring a lock would
-block then the method will raise an exception (ie `Errno::EAGAIN` /
+in a non-blocking manner. When it is found that acquiring a lock would
+block the method will raise an exception (ie `Errno::EAGAIN` /
 `Errno::EWOULDBLOCK`) instead:
 
 ```ruby
@@ -70,6 +75,29 @@ file.close
 # Lock acquired by child process (2023-02-11 19:03:08 UTC)
 ```
 
+### Lock::FFI
+
+The [`Lock::FFI`](#apidocs) module provides a direct interface to
+[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
+that is more or less equivalent to how the function would be called
+from C:
+
+```ruby
+require "lockf"
+require "tempfile"
+
+file = Tempfile.new("lockf-ffi").tap(&:unlink)
+Lock::FFI.lockf(file.fileno, Lock::FFI::F_LOCK, 0)
+print "Lock acquired", "\n"
+Lock::FFI.lockf(file.fileno, Lock::FFI::F_ULOCK, 0)
+print "Lock released", "\n"
+file.close
+
+##
+# Lock acquired
+# Lock released
+```
+
 ## Sources
 
 * [Source code (GitHub)](https://github.com/0x1eef/lockf.rb#readme)
@@ -85,7 +113,7 @@ are available as sources.
 
 ## License
 
-[BSD Zero Clause](https://choosealicense.com/licenses/0bsd/)
+[BSD Zero Clause](https://choosealicense.com/licenses/0bsd/).
 <br>
-See [LICENSE](./LICENSE)
+See [LICENSE](./LICENSE).
 

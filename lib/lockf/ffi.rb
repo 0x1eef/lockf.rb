@@ -1,32 +1,28 @@
 ##
-# The {Lock::FFI Lock::FFI} module provides a one-to-one
-# mapping to the C function **lockf**.
+# The [`Lock::FFI`](#apidocs) module provides a direct interface to
+# [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
+# that is more or less equivalent to how the function would be called
+# from C.
 module Lock::FFI
   require "lockf/lockf.rb.so"
   ##
   # @!method lockf
-  #   A low-level interface to the C function **lockf**.
-  #
   #   @example
-  #     Lock::FFI.lockf(5, Lock::File::F_LOCK, 0)
+  #     Lock::FFI.lockf(5, Lock::FFI::F_LOCK, 0)
   #
   #   @param [Integer] fd
-  #     The file descriptor.
+  #     A number that represents a file descriptor
   #
   #   @param [Integer] cmd
-  #     An integer represented by one of the following constants:
-  #       * {Lock::File::F_LOCK}
-  #       * {Lock::File::F_TLOCK}
-  #       * {Lock::File::F_ULOCK}
-  #       * {Lock::File::F_TEST}
+  #     {Lock::FFI::F_LOCK}, {Lock::FFI::F_TLOCK}, {Lock::FFI::F_ULOCK}, or
+  #     {Lock::FFI::F_TEST}
   #
   #   @param [Integer] len
-  #     The number of bytes.
-  #
-  #   @raise (see Lock::File#obtain)
+  #     A number of bytes that represents a section of a file to perform
+  #     a command on
   #
   #   @return [Integer]
-  #     Returns 0 when successful.
+  #     Returns 0 on success
   #
   #   @see (https://man7.org/linux/man-pages/man3/lockf.3.html) lockf man page (Linux)
   #   @see (https://man.openbsd.org/lockf.3) lockf man page (OpenBSD)
