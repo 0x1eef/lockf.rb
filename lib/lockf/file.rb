@@ -2,8 +2,8 @@
 # The {Lock::File Lock::File} class implements record locking through
 # the POSIX function: lockf.
 class Lock::File
-  require_relative "file/ffi"
-  include Lock::File::FFI
+  require_relative "ffi"
+  include Lock::FFI
 
   ##
   # @return [<File, Tempfile, #fileno>]
