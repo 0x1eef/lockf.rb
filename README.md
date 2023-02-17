@@ -88,7 +88,9 @@ file.close
 The [`Lock::FFI`](#apidocs) module provides a direct interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
 that is more or less equivalent to how the function would be called
-from C:
+from C.
+
+#### Blocking lock
 
 ```ruby
 require "lockf"
@@ -96,6 +98,24 @@ require "tempfile"
 
 file = Tempfile.new("lockf-ffi").tap(&:unlink)
 Lock::FFI.lockf(file.fileno, Lock::FFI::F_LOCK, 0)
+print "Lock acquired", "\n"
+Lock::FFI.lockf(file.fileno, Lock::FFI::F_ULOCK, 0)
+print "Lock released", "\n"
+file.close
+
+##
+# Lock acquired
+# Lock released
+```
+
+#### Non-blocking lock
+
+```ruby
+require "lockf"
+require "tempfile"
+
+file = Tempfile.new("lockf-ffi").tap(&:unlink)
+Lock::FFI.lockf(file.fileno, Lock::FFI::F_TLOCK, 0)
 print "Lock acquired", "\n"
 Lock::FFI.lockf(file.fileno, Lock::FFI::F_ULOCK, 0)
 print "Lock released", "\n"
