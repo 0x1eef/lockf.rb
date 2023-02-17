@@ -42,9 +42,9 @@ file.close
 #### Non-blocking lock
 
 The `Lock::File#lock_nonblock` method can be used to acquire a lock
-in a non-blocking manner. When it is found that acquiring a lock would
-block the method will raise an exception (ie `Errno::EAGAIN` /
-`Errno::EWOULDBLOCK`) instead:
+without blocking. When it is found that acquiring a lock would block
+the method will raise an exception (ie `Errno::EAGAIN` /`Errno::EWOULDBLOCK`)
+instead:
 
 ```ruby
 require "lockf"
