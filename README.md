@@ -6,8 +6,8 @@ lockf.rb is a C extension that provides a Ruby interface to
 implements an advisory-mode lock that can be placed on select regions
 of a file, or on the entire contents of a file. The lock can be used to
 synchronize access to a file between multiple processes, or be used
-more generally to synchronize access to any shared resource being accessed
-by multiple processes at the same time. In the general case, the lock can
+more generally to synchronize access to a shared resource being accessed
+by multiple processes at the same time. When used generally, the lock can
 provide something similar to a mutex that works across multiple processes
 rather than multiple threads.
 
