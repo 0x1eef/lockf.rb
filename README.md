@@ -13,14 +13,14 @@ rather than multiple threads.
 
 ## Examples
 
-### Lock::File
+### LockFile
 
-The [`Lock::File`](#apidocs) class provides a Ruby-oriented interface to
+The `LockFile` class provides an abstract, Ruby-oriented interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 
 #### Blocking lock
 
-The `Lock::File#lock` method can be used to acquire a lock. The method will
+The `LockFile#lock` method can be used to acquire a lock. The method will
 block when another process has acquired a lock beforehand:
 
 ```ruby
@@ -28,7 +28,7 @@ require "lockf"
 require "tempfile"
 
 file  = Tempfile.new("lockf").tap(&:unlink)
-lockf = Lock::File.new(file)
+lockf = LockFile.new(file)
 lockf.lock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 pid = fork {
@@ -49,7 +49,7 @@ file.close
 
 #### Non-blocking lock
 
-The `Lock::File#lock_nonblock` method can be used to acquire a lock
+The `LockFile#lock_nonblock` method can be used to acquire a lock
 without blocking. When it is found that acquiring a lock would block
 the method will raise an exception (ie `Errno::EAGAIN` /`Errno::EWOULDBLOCK`)
 instead:
@@ -59,7 +59,7 @@ require "lockf"
 require "tempfile"
 
 file  = Tempfile.new("lockf").tap(&:unlink)
-lockf = Lock::File.new(file)
+lockf = LockFile.new(file)
 lockf.lock_nonblock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 pid = fork do
@@ -83,9 +83,9 @@ file.close
 # Lock acquired by child process (2023-02-11 19:03:08 UTC)
 ```
 
-### Lock::FFI
+### LockFile.lockf
 
-The [`Lock::FFI`](#apidocs) module provides a direct interface to
+The `LockFile.lockf` method provides a direct interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
 that is more or less equivalent to how the function would be called
 from C.
@@ -97,9 +97,9 @@ require "lockf"
 require "tempfile"
 
 file = Tempfile.new("lockf-ffi").tap(&:unlink)
-Lock::FFI.lockf(file.fileno, Lock::FFI::F_LOCK, 0)
+LockFile.lockf(file.fileno, F_LOCK, 0)
 print "Lock acquired", "\n"
-Lock::FFI.lockf(file.fileno, Lock::FFI::F_ULOCK, 0)
+LockFile.lockf(file.fileno, F_ULOCK, 0)
 print "Lock released", "\n"
 file.close
 
@@ -115,9 +115,9 @@ require "lockf"
 require "tempfile"
 
 file = Tempfile.new("lockf-ffi").tap(&:unlink)
-Lock::FFI.lockf(file.fileno, Lock::FFI::F_TLOCK, 0)
+LockFile.lockf(file.fileno, F_TLOCK, 0)
 print "Lock acquired", "\n"
-Lock::FFI.lockf(file.fileno, Lock::FFI::F_ULOCK, 0)
+LockFile.lockf(file.fileno, F_ULOCK, 0)
 print "Lock released", "\n"
 file.close
 

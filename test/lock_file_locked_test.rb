@@ -1,10 +1,10 @@
 require_relative "setup"
-class Lock::File::Test < Test::Unit::TestCase
+class LockFile::Test < Test::Unit::TestCase
   include Timeout
   attr_reader :lockf
 
   def setup
-    @lockf = Lock::File.new(file)
+    @lockf = LockFile.new(file)
   end
 
   def teardown

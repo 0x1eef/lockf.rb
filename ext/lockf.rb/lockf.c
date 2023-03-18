@@ -25,13 +25,12 @@ lockf_lock(VALUE self, VALUE fd, VALUE cmd, VALUE len)
 void
 Init_lockf(void)
 {
-  VALUE mLock, mFFI;
+  VALUE cLockf;
 
-  mLock = rb_define_module("Lock");
-  mFFI = rb_const_get(mLock, rb_intern("FFI"));
-  rb_define_const(mFFI, "F_LOCK", INT2NUM(F_LOCK));
-  rb_define_const(mFFI, "F_TLOCK", INT2NUM(F_TLOCK));
-  rb_define_const(mFFI, "F_ULOCK", INT2NUM(F_ULOCK));
-  rb_define_const(mFFI, "F_TEST", INT2NUM(F_TEST));
-  rb_define_module_function(mFFI, "lockf", lockf_lock, 3);
+  cLockf = rb_define_class("LockFile", rb_cObject);
+  rb_define_const(cLockf, "F_LOCK", INT2NUM(F_LOCK));
+  rb_define_const(cLockf, "F_TLOCK", INT2NUM(F_TLOCK));
+  rb_define_const(cLockf, "F_ULOCK", INT2NUM(F_ULOCK));
+  rb_define_const(cLockf, "F_TEST", INT2NUM(F_TEST));
+  rb_define_singleton_method(cLockf, "lockf", lockf_lock, 3);
 }
