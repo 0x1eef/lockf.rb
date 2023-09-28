@@ -2,8 +2,9 @@
 
 lockf.rb is a C extension that provides a Ruby interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
+The 
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
-implements an advisory-mode lock that can be placed on select regions
+function implements an advisory-mode lock that can be placed on select regions
 of a file, or on the entire contents of a file. The lock can be used to
 synchronize access to a file between multiple processes, or be used
 more generally to synchronize access to a shared resource being accessed
