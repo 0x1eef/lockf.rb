@@ -8,7 +8,7 @@ class LockFile
   include Fcntl
 
   ##
-  # @!method LockFile.lockf
+  # @!method self.lockf
   #   @example
   #     LockFile.lockf(5, Lockf::F_LOCK, 0)
   #
