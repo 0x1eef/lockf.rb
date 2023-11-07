@@ -6,17 +6,17 @@
 static VALUE
 lockf_lock(VALUE self, VALUE fd, VALUE cmd, VALUE len)
 {
-  int ok;
+  int result;
 
   Check_Type(fd, T_FIXNUM);
   Check_Type(cmd, T_FIXNUM);
   Check_Type(len, T_FIXNUM);
   errno = 0;
-  ok = lockf(NUM2INT(fd), NUM2INT(cmd), NUM2INT(len)) == 0;
-  if (ok) {
-    return INT2NUM(0);
-  } else {
+  result = lockf(NUM2INT(fd), NUM2INT(cmd), NUM2INT(len));
+  if (result == -1) {
     rb_syserr_fail(errno, "lockf");
+  } else {
+    return INT2NUM(result);
   }
 }
 

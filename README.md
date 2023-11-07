@@ -20,7 +20,9 @@ processes rather than multiple threads.
 
 ### LockFile
 
-The `LockFile` class provides an abstract, Ruby-oriented interface to
+The
+[`LockFile`](https://0x1eef.github.io/x/lockf.rb/LockFile.html)
+class provides an abstract, Ruby-oriented interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 
 __Blocking lock__

@@ -1,11 +1,8 @@
 ##
-# lockf.rb is a C extension that provides a Ruby interface to lockf(3). lockf(3)
-# implements an advisory-mode lock that can be placed on select regions of a
-# file, or on the entire contents of a file. The lock can be used to synchronize
-# access to a file between multiple processes, or be used more generally to
-# synchronize access to a shared resource being accessed by multiple processes
-# at the same time. When used generally, the lock can provide something similar
-# to a mutex that works across multiple processes rather than multiple threads.
+# The
+# [`LockFile`](https://0x1eef.github.io/x/lockf.rb/LockFile.html)
+# class provides a Ruby-oriented interface to the C function
+# [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 class LockFile
   require_relative "lockf.rb.so"
   include Fcntl
@@ -16,18 +13,21 @@ class LockFile
   #     LockFile.lockf(5, Lockf::F_LOCK, 0)
   #
   #   @param [Integer] fd
-  #     A number that represents a file descriptor
+  #     A number that represents a file descriptor.
   #
   #   @param [Integer] cmd
   #     {LockFile::F_LOCK}, {LockFile::F_TLOCK}, {LockFile::F_ULOCK}, or
-  #     {LockFile::F_TEST}
+  #     {LockFile::F_TEST}.
   #
   #   @param [Integer] len
-  #     A number of bytes that represents a section of a file to perform
-  #     a command on
+  #     The number of bytes to place a lock on.
+  #     A value of "0" covers the entire file.
+  #
+  #   @raise [SystemCallError]
+  #     Might raise a number of Errno exception classes.
   #
   #   @return [Integer]
-  #     Returns 0 on success
+  #     Returns 0 on success.
   #
   #   @see (https://man7.org/linux/man-pages/man3/lockf.3.html) lockf man page (Linux)
   #   @see (https://man.openbsd.org/lockf.3) lockf man page (OpenBSD)
