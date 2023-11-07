@@ -34,12 +34,6 @@ class LockFile
   #   @see (https://www.freebsd.org/cgi/man.cgi?query=lockf) lockf man page (FreeBSD)
 
   ##
-  # @return [String]
-  def self.version
-    "0.10.2"
-  end
-
-  ##
   # @example
   # lockf = LockFile.from_temporary_file
   # lockf.lock

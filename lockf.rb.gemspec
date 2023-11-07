@@ -1,11 +1,11 @@
-require "./lib/lockf"
+require "./lib/lockf/version"
 
 Gem::Specification.new do |gem|
   gem.name = "lockf.rb"
   gem.authors = ["0x1eef"]
   gem.email = ["0x1eef@protonmail.com"]
   gem.homepage = "https://github.com/0x1eef/lockf.rb#readme"
-  gem.version = LockFile.version
+  gem.version = LockFile::VERSION
   gem.licenses = ["0BSD"]
   gem.files = `git ls-files`.split($/)
   gem.require_paths = ["lib"]
