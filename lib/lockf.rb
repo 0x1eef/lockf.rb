@@ -7,7 +7,8 @@
 # at the same time. When used generally, the lock can provide something similar
 # to a mutex that works across multiple processes rather than multiple threads.
 class LockFile
-  require "lockf/lockf.rb.so"
+  require_relative "lockf.rb.so"
+  include Fcntl
 
   ##
   # @!method LockFile.lockf
