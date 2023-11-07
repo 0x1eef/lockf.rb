@@ -9,8 +9,8 @@ pid = fork do
   lockf.lock_nonblock
   print "Lock acquired by child process (#{Time.now.utc})", "\n"
 rescue Errno::EWOULDBLOCK
-  print "Lock would block", "\n"
   sleep 1
+  print "Lock would block", "\n"
   retry
 end
 sleep 3
