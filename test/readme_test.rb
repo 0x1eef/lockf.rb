@@ -16,9 +16,7 @@ class LockFile::ReadmeTest < Test::Unit::TestCase
 
   def test_lockfile_nonblocking_variant
     r = 'Lock acquired by parent process \(.+\)\s*' \
-    'Lock would block\s*' \
-    'Lock would block\s*' \
-    'Lock would block\s*' \
+    '(Lock would block\s*){3,4}' \
     'Lock acquired by child process \(.+\)\s*'
     assert_match Regexp.new(r),
                  readme_example("2_lockfile_nonblocking_variant.rb").stdout
