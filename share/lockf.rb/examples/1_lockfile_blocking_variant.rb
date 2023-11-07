@@ -1,8 +1,8 @@
 require "lockf"
 require "tempfile"
 
-file  = Tempfile.new("lockf").tap(&:unlink)
-lockf = Lock::File.new(file)
+file = Tempfile.new("lockf").tap(&:unlink)
+lockf = LockFile.new(file)
 lockf.lock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 pid = fork do

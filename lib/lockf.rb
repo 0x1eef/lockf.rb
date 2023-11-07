@@ -71,7 +71,7 @@ class LockFile
     LockFile.lockf(@file.fileno, F_LOCK, @len)
   rescue Errno::EINTR => ex
     attempts += 1
-    (attempts == 3) ? raise(ex) : retry
+    attempts == 3 ? raise(ex) : retry
   end
 
   ##
