@@ -23,7 +23,7 @@ processes rather than multiple threads.
 The `LockFile` class provides an abstract, Ruby-oriented interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 
-#### Blocking lock
+__Blocking lock__
 
 The `LockFile#lock` method can be used to acquire a lock. The method will
 block when another process has acquired a lock beforehand:
@@ -52,7 +52,7 @@ file.close
 # Lock acquired by child process (2023-02-11 16:43:18 UTC)
 ```
 
-#### Non-blocking lock
+__Non-blocking lock__
 
 The `LockFile#lock_nonblock` method can be used to acquire a lock
 without blocking. When it is found that acquiring a lock would block
@@ -95,7 +95,7 @@ The `LockFile.lockf` method provides a direct interface to
 that is more or less equivalent to how the function would be called
 from C.
 
-#### Blocking lock
+__Blocking lock__
 
 ```ruby
 require "lockf"
@@ -113,7 +113,7 @@ file.close
 # Lock released
 ```
 
-#### Non-blocking lock
+__Non-blocking lock__
 
 ```ruby
 require "lockf"
