@@ -36,7 +36,7 @@ class LockFile
   ##
   # @return [String]
   def self.version
-    "0.9.1"
+    "0.9.2"
   end
 
   ##
