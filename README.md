@@ -92,7 +92,9 @@ file.close
 
 ### LockFile.lockf
 
-The `LockFile.lockf` method provides a direct interface to
+The
+[`LockFile.lockf`](https://0x1eef.github.io/x/lockf.rb/LockFile.html#lockf-class_method)
+method provides a direct interface to
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
 that is more or less equivalent to how the function would be called
 from C.
