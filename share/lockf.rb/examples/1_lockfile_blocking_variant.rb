@@ -1,8 +1,7 @@
 require "lockf"
 require "tempfile"
 
-file = Tempfile.new("lockf").tap(&:unlink)
-lockf = LockFile.new(file)
+lockf = LockFile.from_temporary_file
 lockf.lock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 pid = fork do
@@ -13,7 +12,7 @@ end
 sleep(3)
 lockf.release
 Process.wait(pid)
-file.close
+lockf.file.close
 
 ##
 # Lock acquired by parent process (2023-02-11 16:43:15 UTC)
