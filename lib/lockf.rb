@@ -4,6 +4,7 @@
 # class provides a Ruby-oriented interface to the C function
 # [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 class LockFile
+  require "tmpdir"
   require_relative "lockf.rb.so"
   include Fcntl
 

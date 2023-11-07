@@ -62,7 +62,6 @@ instead:
 
 ```ruby
 require "lockf"
-require "tempfile"
 
 lockf = LockFile.from_temporary_file
 lockf.lock_nonblock
@@ -101,7 +100,6 @@ __Blocking lock__
 
 ```ruby
 require "lockf"
-require "tempfile"
 
 file = Tempfile.new("lockf-ffi").tap(&:unlink)
 LockFile.lockf(file.fileno, LockFile::F_LOCK, 0)

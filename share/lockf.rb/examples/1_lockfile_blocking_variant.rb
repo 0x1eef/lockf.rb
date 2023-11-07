@@ -1,5 +1,4 @@
 require "lockf"
-require "tempfile"
 
 lockf = LockFile.from_temporary_file
 lockf.lock
