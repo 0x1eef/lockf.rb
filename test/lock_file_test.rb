@@ -61,6 +61,13 @@ class LockFile::Test < Test::Unit::TestCase
     lockf.release
   end
 
+  def test_from_temporary_file
+    lockf = LockFile.from_temporary_file
+    assert_equal 0, lockf.lock
+    assert_equal 0, lockf.release
+    lockf.file.close
+  end
+
   private
 
   def file

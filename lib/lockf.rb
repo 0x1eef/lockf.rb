@@ -40,6 +40,28 @@ class LockFile
   end
 
   ##
+  # @example
+  # lockf = LockFile.from_temporary_file
+  # lockf.lock
+  # lockf.release
+  # lockf.file.close
+  #
+  # @param [String] basename
+  #  The basename of the temporary file.
+  #
+  # @param [String] tmpdir
+  #  The path to the parent directory of the temporary file.
+  #
+  # @return [LockFile]
+  #  Returns an instance of {LockFile LockFile} backed by an
+  #  instance of Tempfile.
+  def self.from_temporary_file(basename: "lockf", tmpdir: Dir.tmpdir)
+    require "tempfile" unless defined?(Tempfile)
+    file = Tempfile.new(basename, tmpdir:).tap(&:unlink)
+    LockFile.new(file)
+  end
+
+  ##
   # @return [<File, Tempfile, #fileno>]
   #  Returns a file object.
   attr_reader :file
