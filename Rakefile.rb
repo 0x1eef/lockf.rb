@@ -12,16 +12,9 @@ namespace :linters do
     sh "bundle exec rubocop -A Rakefile.rb lib/**/*.rb spec/**/*.rb"
   end
 end
+task lint: ["linters:c", "linters:ruby"]
 
 Rake::ExtensionTask.new("lockf.rb")
-mv_proc = proc do
-  sh "mv",
-     File.join(__dir__, "lib", "lockf.rb.so"),
-     File.join(__dir__, "lib")
-end
-Rake::Task["compile"].enhance(&mv_proc)
-Rake::Task["compile:lockf.rb"].enhance(&mv_proc)
-task lint: ["linters:c", "linters:ruby"]
 
 Rake::TestTask.new do |t|
   t.test_files = FileList['test/*_test.rb']
