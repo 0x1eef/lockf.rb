@@ -38,11 +38,11 @@ file  = Tempfile.new("lockf").tap(&:unlink)
 lockf = LockFile.new(file)
 lockf.lock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
-pid = fork {
+pid = fork do
   print "Child process waiting on lock (#{Time.now.utc})", "\n"
   lockf.lock
   print "Lock acquired by child process (#{Time.now.utc})", "\n"
-}
+end
 sleep(3)
 lockf.release
 Process.wait(pid)
