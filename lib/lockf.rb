@@ -10,7 +10,7 @@ class LockFile
   ##
   # @!method self.lockf
   #   @example
-  #     LockFile.lockf(5, Lockf::F_LOCK, 0)
+  #     LockFile.lockf(5, LockFile::F_LOCK, 0)
   #
   #   @param [Integer] fd
   #     A number that represents a file descriptor.
