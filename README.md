@@ -32,7 +32,6 @@ block when another process has acquired a lock beforehand:
 
 ```ruby
 require "lockf"
-require "tempfile"
 
 lockf = LockFile.from_temporary_file
 lockf.lock
