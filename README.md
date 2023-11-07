@@ -100,6 +100,7 @@ __Blocking lock__
 
 ```ruby
 require "lockf"
+require "tempfile"
 
 file = Tempfile.new("lockf-ffi").tap(&:unlink)
 LockFile.lockf(file.fileno, LockFile::F_LOCK, 0)
