@@ -55,6 +55,9 @@ class LockFile
     file = Tempfile.new(basename, tmpdir:).tap(&:unlink)
     LockFile.new(file)
   end
+  class << self
+    alias_method :temporary_file, :from_temporary_file
+  end
 
   ##
   # @return [<File, Tempfile, #fileno>]

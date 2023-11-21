@@ -33,7 +33,7 @@ block when another process has acquired a lock beforehand:
 ```ruby
 require "lockf"
 
-lockf = LockFile.from_temporary_file
+lockf = LockFile.temporary_file
 lockf.lock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 pid = fork do
@@ -62,7 +62,7 @@ instead:
 ```ruby
 require "lockf"
 
-lockf = LockFile.from_temporary_file
+lockf = LockFile.temporary_file
 lockf.lock_nonblock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 pid = fork do
