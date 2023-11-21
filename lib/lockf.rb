@@ -9,7 +9,7 @@ class LockFile
   include Fcntl
 
   ##
-  # @!method self.lockf
+  # @!method self.lockf(fd, cmd, len)
   #   @example
   #     LockFile.lockf(5, LockFile::F_LOCK, 0)
   #
@@ -36,10 +36,10 @@ class LockFile
 
   ##
   # @example
-  # lockf = LockFile.temporary_file
-  # lockf.lock
-  # lockf.release
-  # lockf.file.close
+  #   lockf = LockFile.temporary_file
+  #   lockf.lock
+  #   lockf.release
+  #   lockf.file.close
   #
   # @param [String] basename
   #  The basename of the temporary file.
