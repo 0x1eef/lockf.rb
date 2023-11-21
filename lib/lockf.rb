@@ -36,7 +36,7 @@ class LockFile
 
   ##
   # @example
-  # lockf = LockFile.from_temporary_file
+  # lockf = LockFile.temporary_file
   # lockf.lock
   # lockf.release
   # lockf.file.close
@@ -49,7 +49,7 @@ class LockFile
   #
   # @return [LockFile]
   #  Returns an instance of {LockFile LockFile} backed by an
-  #  instance of Tempfile.
+  #  unlinked instance of Tempfile.
   def self.from_temporary_file(basename: "lockf", tmpdir: Dir.tmpdir)
     require "tempfile" unless defined?(Tempfile)
     file = Tempfile.new(basename, tmpdir:).tap(&:unlink)
