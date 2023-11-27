@@ -1,6 +1,7 @@
 require_relative "setup"
 class LockFile::Test < Test::Unit::TestCase
   include Timeout
+  include FileUtils
   attr_reader :lockf
 
   def setup
@@ -61,6 +62,21 @@ class LockFile::Test < Test::Unit::TestCase
     lockf.release
   end
 
+  ##
+  # LockFile#initialize
+  def test_initialize_with_str_path
+    path = File.join(Dir.getwd, "test", "tmp.txt")
+    touch(path)
+    lockf = LockFile.new(path)
+    assert_equal 0, lockf.lock
+    assert_equal 0, lockf.release
+  ensure
+    lockf.file.close
+    rm(path)
+  end
+
+  ##
+  # LockFile.from_temporary_file
   def test_from_temporary_file
     lockf = LockFile.from_temporary_file
     assert_equal 0, lockf.lock
