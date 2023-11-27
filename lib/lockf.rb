@@ -123,4 +123,18 @@ class LockFile
   rescue Errno::EACCES, Errno::EAGAIN
     true
   end
+
+  ##
+  # Closes {LockFile#file LockFile#file}.
+  #
+  # @example
+  #   # Equivalent to:
+  #   lockf = LockFile.temporary_file
+  #   lockf.file.close
+  #
+  # @return [void]
+  def close
+    return unless @file.respond_to?(:close)
+    @file.close
+  end
 end
