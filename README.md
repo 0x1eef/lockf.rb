@@ -138,11 +138,24 @@ file.close
 
 ## Install
 
+**Git**
+
 lockf.rb is distributed as a RubyGem through its git repositories. <br>
 [GitHub](https://github.com/0x1eef/lockf.rb),
 and
 [GitLab](https://gitlab.com/0x1eef/lockf.rb)
 are available as sources.
+
+``` ruby
+# Gemfile
+gem "lock.fb", github: "0x1eef/lockf.rb", tag: "v0.12.0"
+```
+
+**Rubygems.org**
+
+lock.rb can also be installed via rubygems.org.
+
+    gem install lockf.rb
 
 ## License
 
