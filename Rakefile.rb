@@ -1,3 +1,4 @@
+require "bundler/setup"
 require "rake/extensiontask"
 require "rake/testtask"
 

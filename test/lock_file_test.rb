@@ -2,9 +2,11 @@ require_relative "setup"
 class LockFile::Test < Test::Unit::TestCase
   include Timeout
   include FileUtils
-  attr_reader :lockf
+
+  attr_reader :file, :lockf
 
   def setup
+    @file  = Tempfile.new("lockf-test").tap(&:unlink)
     @lockf = LockFile.new(file)
   end
 
@@ -13,7 +15,7 @@ class LockFile::Test < Test::Unit::TestCase
   end
 
   ##
-  # Lock::File#lock tests
+  # Lock::File#lock
   def test_lock
     assert_equal 0, lockf.lock
   ensure
@@ -21,19 +23,16 @@ class LockFile::Test < Test::Unit::TestCase
   end
 
   def test_lock_in_fork
-    Process.wait fork {
-      lockf.lock
-      Process.kill("SIGINT", Process.ppid)
-      sleep(1)
-    }
-  rescue Interrupt
-    assert_raises(Timeout::Error) { timeout(0.5) { lockf.lock } }
+    pid = fork_sleep { lockf.lock }
+    sleep(0.1)
+    assert_raises(Errno::EWOULDBLOCK) { lockf.lock_nonblock }
   ensure
+    Process.kill("KILL", pid)
     lockf.release
   end
 
   ##
-  # Lock::File#lock_nonblock tests
+  # Lock::File#lock_nonblock
   def test_lock_nonblock
     assert_equal 0, lockf.lock_nonblock
   ensure
@@ -41,52 +40,41 @@ class LockFile::Test < Test::Unit::TestCase
   end
 
   def test_lock_nonblock_in_fork
-    Process.wait fork {
-      lockf.lock_nonblock
-      Process.kill("SIGINT", Process.ppid)
-      sleep(1)
-    }
-  rescue Interrupt
-    assert_raises(Errno::EAGAIN) { lockf.lock_nonblock }
+    pid = fork_sleep { lockf.lock_nonblock }
+    sleep(0.1)
+    assert_raises(Errno::EWOULDBLOCK) { lockf.lock_nonblock }
   ensure
+    Process.kill("KILL", pid)
     lockf.release
   end
 
   ##
-  # Lock::File#locked? tests
+  # Lock::File#locked?
   def test_locked?
-    lockf.lock
-    Process.wait fork { lockf.locked? ? exit(0) : exit(1) }
-    assert_equal 0, $?.exitstatus
+    pid = fork_sleep { lockf.lock }
+    sleep(0.1)
+    assert_equal true, lockf.locked?
   ensure
+    Process.kill("KILL", pid)
     lockf.release
   end
 
   ##
-  # LockFile#initialize
-  def test_initialize_with_str_path
-    path = File.join(Dir.getwd, "test", "tmp.txt")
-    touch(path)
-    lockf = LockFile.new(path)
+  # LockFile.temporary_file
+  def test_temporary_file
+    lockf = LockFile.temporary_file
     assert_equal 0, lockf.lock
     assert_equal 0, lockf.release
   ensure
-    lockf.file.close
-    rm(path)
-  end
-
-  ##
-  # LockFile.from_temporary_file
-  def test_from_temporary_file
-    lockf = LockFile.from_temporary_file
-    assert_equal 0, lockf.lock
-    assert_equal 0, lockf.release
     lockf.file.close
   end
 
   private
 
-  def file
-    @file ||= Tempfile.new("lockf-test").tap(&:unlink)
+  def fork_sleep
+    fork do
+      yield
+      sleep
+    end
   end
 end

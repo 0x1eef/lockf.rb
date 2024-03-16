@@ -6,7 +6,6 @@
 class LockFile
   require "tmpdir"
   require_relative "lockf.rb.so"
-  include Fcntl
 
   ##
   # @!method self.lockf(fd, cmd, len)

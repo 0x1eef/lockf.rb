@@ -13,24 +13,22 @@ lockf_lock(VALUE self, VALUE fd, VALUE cmd, VALUE len)
   Check_Type(len, T_FIXNUM);
   errno = 0;
   result = lockf(NUM2INT(fd), NUM2INT(cmd), NUM2INT(len));
-  if (result == -1) {
-    rb_syserr_fail(errno, "lockf");
-  } else {
+  if (result == 0) {
     return INT2NUM(result);
+  } else {
+    rb_syserr_fail(errno, "lockf");
   }
 }
 
 void
 Init_lockf(void)
 {
-  VALUE cLockf, mFcntl;
+  VALUE cLockf;
 
-  rb_require("fcntl");
   cLockf = rb_define_class("LockFile", rb_cObject);
-  mFcntl = rb_const_get(rb_cObject, rb_intern("Fcntl"));
-  rb_define_const(mFcntl, "F_LOCK", INT2NUM(F_LOCK));
-  rb_define_const(mFcntl, "F_TLOCK", INT2NUM(F_TLOCK));
-  rb_define_const(mFcntl, "F_ULOCK", INT2NUM(F_ULOCK));
-  rb_define_const(mFcntl, "F_TEST", INT2NUM(F_TEST));
+  rb_define_const(cLockf, "F_LOCK", INT2NUM(F_LOCK));
+  rb_define_const(cLockf, "F_TLOCK", INT2NUM(F_TLOCK));
+  rb_define_const(cLockf, "F_ULOCK", INT2NUM(F_ULOCK));
+  rb_define_const(cLockf, "F_TEST", INT2NUM(F_TEST));
   rb_define_singleton_method(cLockf, "lockf", lockf_lock, 3);
 }
