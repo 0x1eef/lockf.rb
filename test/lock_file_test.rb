@@ -1,6 +1,7 @@
 require_relative "setup"
 class LockFile::Test < Test::Unit::TestCase
-  attr_reader :file, :lockf
+  attr_reader :file
+  attr_reader :lockf
 
   def setup
     @file  = Tempfile.new("lockf-test").tap(&:unlink)
