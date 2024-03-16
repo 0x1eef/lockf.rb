@@ -1,8 +1,5 @@
 require_relative "setup"
 class LockFile::Test < Test::Unit::TestCase
-  include Timeout
-  include FileUtils
-
   attr_reader :file, :lockf
 
   def setup
