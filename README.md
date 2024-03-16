@@ -7,14 +7,6 @@ The
 function implements an advisory-mode lock that can be placed on select
 regions of a file, or on the entire contents of a file.
 
-[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
-can synchronize access to a file between multiple processes, or 
-synchronize access to a shared resource being accessed by multiple 
-processes at the same time. When used with a shared resource,
-[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
-can provide something similar to a mutex that works across multiple
-processes rather than multiple threads.
-
 ## Examples
 
 ### LockFile
