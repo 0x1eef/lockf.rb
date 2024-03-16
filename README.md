@@ -1,6 +1,6 @@
 ## About
 
-lockf.rb is a C extension that provides a Ruby interface to
+lockf.rb provides Ruby bindings for
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 The
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
@@ -8,10 +8,9 @@ function implements an advisory-mode lock that can be placed on select
 regions of a file, or on the entire contents of a file.
 
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
-can be used to synchronize access to a file between multiple
-processes, or be used more generally to synchronize access to a shared
-resource being accessed by multiple processes at the same time. When used
-generally,
+can synchronize access to a file between multiple processes, or 
+synchronize access to a shared resource being accessed by multiple 
+processes at the same time. When used with a shared resource,
 [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
 can provide something similar to a mutex that works across multiple
 processes rather than multiple threads.
@@ -131,26 +130,18 @@ file.close
 # Lock released
 ```
 
-## Sources
-
-* [Source code (GitHub)](https://github.com/0x1eef/lockf.rb#readme)
-* [Source code (GitLab)](https://gitlab.com/0x1eef/lockf.rb#about)
-
 ## Install
-
-**Git**
-
-lockf.rb is distributed as a RubyGem through its git repositories. <br>
-[GitHub](https://github.com/0x1eef/lockf.rb),
-and
-[GitLab](https://gitlab.com/0x1eef/lockf.rb)
-are available as sources.
 
 **Rubygems.org**
 
-lockf.rb can also be installed via rubygems.org.
+lockf.rb can be installed via rubygems.org.
 
     gem install lockf.rb
+
+## Sources
+
+* [GitHub](https://github.com/0x1eef/lockf.rb#readme)
+* [GitLab](https://gitlab.com/0x1eef/lockf.rb#about)
 
 ## License
 
