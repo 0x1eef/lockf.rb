@@ -122,6 +122,11 @@ file.close
 # Lock released
 ```
 
+## Documentation
+
+A complete API reference is available at 
+[0x1eef.github.io/x/lockf.rb](https://0x1eef.github.io/x/lockf.rb).
+
 ## Install
 
 **Rubygems.org**
