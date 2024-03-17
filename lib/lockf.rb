@@ -1,7 +1,7 @@
 ##
 # The
-# [`LockFile`](https://0x1eef.github.io/x/lockf.rb/LockFile.html)
-# class provides a Ruby-oriented interface to the C function
+# [LockFile](https://0x1eef.github.io/x/lockf.rb/LockFile.html)
+# class provides a Ruby interface to
 # [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
 class LockFile
   require "tmpdir"
@@ -79,7 +79,8 @@ class LockFile
   end
 
   ##
-  # Acquire a lock (blocking)
+  # Acquire a lock (blocking).
+  #
   # @raise [Errno::EBADF]
   # @raise [Errno::EDEADLK]
   # @raise [Errno::EINTR]
@@ -94,7 +95,8 @@ class LockFile
   end
 
   ##
-  # Acquire a lock (non-blocking)
+  # Acquire a lock (non-blocking).
+  #
   # @raise [Errno::EAGAIN]
   # @raise [Errno::EBADF]
   # @raise [Errno::ENOLCK]
@@ -105,7 +107,8 @@ class LockFile
   end
 
   ##
-  # Release a lock
+  # Release a lock.
+  #
   # @raise [Errno::EBADF]
   # @raise [Errno::ENOLCK]
   # @return [Integer]

@@ -35,7 +35,7 @@ end
 sleep(3)
 lockf.release
 Process.wait(pid)
-lockf.file.close
+lockf.close
 
 ##
 # Lock acquired by parent process (2023-02-11 16:43:15 UTC)
@@ -67,7 +67,7 @@ end
 sleep 3
 lockf.release
 Process.wait(pid)
-lockf.file.close
+lockf.close
 
 ##
 # Lock acquired by parent process (2023-02-11 19:03:05 UTC)
