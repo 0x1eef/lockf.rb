@@ -13,7 +13,7 @@ class LockFile::Test < Test::Unit::TestCase
   end
 
   ##
-  # Lock::File#lock
+  # LockFile#lock
   def test_lock
     assert_equal 0, lockf.lock
   ensure
@@ -30,7 +30,7 @@ class LockFile::Test < Test::Unit::TestCase
   end
 
   ##
-  # Lock::File#lock_nonblock
+  # LockFile#lock_nonblock
   def test_lock_nonblock
     assert_equal 0, lockf.lock_nonblock
   ensure
@@ -47,7 +47,7 @@ class LockFile::Test < Test::Unit::TestCase
   end
 
   ##
-  # Lock::File#locked?
+  # LockFile#locked?
   def test_locked?
     pid = fork_sleep { lockf.lock }
     sleep(0.1)
