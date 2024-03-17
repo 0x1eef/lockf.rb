@@ -4,8 +4,6 @@ require_relative "setup"
 require "test/cmd"
 
 class LockFile::ReadmeTest < Test::Unit::TestCase
-  include Test::Cmd
-
   def test_lockfile_blocking_variant
     r = 'Lock acquired by parent process \(.+\)\s*' \
     'Child process waiting on lock \(.+\)\s*' \
