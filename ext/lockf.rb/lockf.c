@@ -10,11 +10,14 @@ lockf_lock(VALUE self, VALUE fd, VALUE cmd, VALUE len)
   Check_Type(fd, T_FIXNUM);
   Check_Type(cmd, T_FIXNUM);
   Check_Type(len, T_FIXNUM);
-  errno = 0;
+  errno  = 0;
   result = lockf(NUM2INT(fd), NUM2INT(cmd), NUM2INT(len));
-  if (result == 0) {
+  if (result == 0)
+  {
     return INT2NUM(result);
-  } else {
+  }
+  else
+  {
     rb_syserr_fail(errno, "lockf");
   }
 }

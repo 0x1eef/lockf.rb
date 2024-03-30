@@ -4,7 +4,7 @@ class LockFile::Test < Test::Unit::TestCase
   attr_reader :lockf
 
   def setup
-    @file  = Tempfile.new("lockf-test").tap(&:unlink)
+    @file = Tempfile.new("lockf-test").tap(&:unlink)
     @lockf = LockFile.new(file)
   end
 

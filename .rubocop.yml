@@ -18,4 +18,8 @@ Layout/ArgumentAlignment:
 ##
 # Options for all cops.
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
+  Include:
+    - lib/*.rb
+    - lib/**/*.rb
+    - test/*.rb

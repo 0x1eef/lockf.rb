@@ -2,21 +2,22 @@ require "bundler/setup"
 require "rake/extensiontask"
 require "rake/testtask"
 
-namespace :linters do
-  desc "Run the C linter"
-  task :c do
-    sh "uncrustify -c .uncrustify.cfg --no-backup --replace ext/lockf.rb/*.c"
-  end
-
-  desc "Run the Ruby linter"
-  task :ruby do
-    sh "bundle exec rubocop -A Rakefile.rb lib/**/*.rb spec/**/*.rb"
+namespace :clang do
+  desc "Run clang-format"
+  task :format do
+    sh "clang-format -style=file:.clang-format -i ext/lockf.rb/*.c"
   end
 end
-task lint: ["linters:c", "linters:ruby"]
+
+namespace :ruby do
+  desc "Run rubocop"
+  task :format do
+    sh "bundle exec rubocop -A"
+  end
+end
+task format: %w[clang:format ruby:format]
 
 Rake::ExtensionTask.new("lockf.rb")
-
 Rake::TestTask.new do |t|
   t.test_files = FileList["test/*_test.rb"]
   t.verbose = true

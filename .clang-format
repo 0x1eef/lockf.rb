@@ -1,0 +1,11 @@
+BasedOnStyle: LLVM
+IndentWidth: 2
+SortIncludes: false
+UseTab: Never
+BreakBeforeBraces: Allman
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakAfterDefinitionReturnType: TopLevel
+BreakBeforeBinaryOperators: All
+BinPackArguments: false
+AlignConsecutiveAssignments: true
+AlwaysBreakAfterReturnType: None
