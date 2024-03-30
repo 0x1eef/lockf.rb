@@ -1,7 +1,6 @@
 #include <ruby.h>
 #include <unistd.h>
 #include <errno.h>
-#include "lockf.h"
 
 static VALUE
 lockf_lock(VALUE self, VALUE fd, VALUE cmd, VALUE len)
