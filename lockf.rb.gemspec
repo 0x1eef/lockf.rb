@@ -17,5 +17,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rubocop", "~> 1.29"
   gem.add_development_dependency "test-unit", "~> 3.5"
   gem.add_development_dependency "rake-compiler", "~> 1.2"
-  gem.add_development_dependency "test-cmd.rb", "~> 0.6"
+  gem.add_development_dependency "test-cmd.rb", "~> 0.12"
 end
