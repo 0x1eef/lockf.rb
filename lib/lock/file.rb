@@ -40,12 +40,12 @@ class Lock::File
   attr_reader :file
 
   ##
-  # @param [<File, TempFile, String, #fileno>] file
+  # @param [#fileno] file
   # @param [Integer] len
   # @return [Lock::File]
   #  Returns an instance of {Lock::File Lock::File}
   def initialize(file, len = 0)
-    @file = String === file ? File.open(file, "r+") : file
+    @file = file
     @len = len
   end
 
