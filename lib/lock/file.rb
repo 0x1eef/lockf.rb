@@ -35,18 +35,18 @@ class Lock::File
   end
 
   ##
-  # @return [<File, Tempfile, #fileno>]
+  # @return [<#fileno>]
   #  Returns a file handle
   attr_reader :file
 
   ##
-  # @param [#fileno] file
-  # @param [Integer] len
+  # @param [<#fileno>] file
+  # @param [Integer] size
   # @return [Lock::File]
   #  Returns an instance of {Lock::File Lock::File}
-  def initialize(file, len = 0)
+  def initialize(file, size = 0)
     @file = file
-    @len = len
+    @size = size
   end
 
   ##
@@ -59,7 +59,7 @@ class Lock::File
   # @return [Boolean]
   def lock
     tries ||= 0
-    lockf(@file, F_LOCK, @len)
+    lockf(@file, F_LOCK, @size)
   rescue Errno::EINTR => ex
     tries += 1
     tries == 3 ? raise(ex) : retry
@@ -74,7 +74,7 @@ class Lock::File
   # @raise [Errno::EINVAL]
   # @return [Integer]
   def lock_nonblock
-    lockf(@file, F_TLOCK, @len)
+    lockf(@file, F_TLOCK, @size)
   end
 
   ##
@@ -84,14 +84,14 @@ class Lock::File
   # @raise [Errno::ENOLCK]
   # @return [Integer]
   def release
-    lockf(@file, F_ULOCK, @len)
+    lockf(@file, F_ULOCK, @size)
   end
 
   ##
   # @return [Boolean]
   #  Returns true when lock is held by another process
   def locked?
-    lockf(@file, F_TEST, @len)
+    lockf(@file, F_TEST, @size)
     false
   rescue Errno::EACCES, Errno::EAGAIN
     true
