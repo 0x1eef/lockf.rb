@@ -25,13 +25,10 @@ class Lock::File
   # @return [Lock::File]
   #  Returns a {Lock::File Lock::File} for a random,
   #  unlinked temporary file
-  def self.from_temporary_file(basename: "lockf", tmpdir: Dir.tmpdir)
+  def self.temporary_file(basename: "lockf", tmpdir: Dir.tmpdir)
     require "tempfile" unless defined?(Tempfile)
     file = Tempfile.new(basename, tmpdir:).tap(&:unlink)
     Lock::File.new(file)
-  end
-  class << self
-    alias_method :temporary_file, :from_temporary_file
   end
 
   ##
