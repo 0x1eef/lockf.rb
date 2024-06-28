@@ -6,7 +6,6 @@ end unless defined?(Lock)
 # [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
 # interface
 class Lock::File
-  require "tmpdir"
   require_relative "file/version"
   require_relative "file/ffi"
   require_relative "file/constants"
@@ -15,20 +14,19 @@ class Lock::File
   include Constants
 
   ##
+  # Accepts the same parameters as Tempfile.new
+  #
   # @example
   #  lockf = Lock::File.temporary_file
   #  lockf.lock
   #  # ...
   #
-  # @param [String] basename
-  # @param [String] tmpdir
   # @return [Lock::File]
   #  Returns a {Lock::File Lock::File} for a random,
   #  unlinked temporary file
-  def self.temporary_file(basename: "lockf", tmpdir: Dir.tmpdir)
+  def self.temporary_file(...)
     require "tempfile" unless defined?(Tempfile)
-    file = Tempfile.new(basename, tmpdir:).tap(&:unlink)
-    Lock::File.new(file)
+    Lock::File.new Tempfile.new(...).tap(&:unlink)
   end
 
   ##
