@@ -32,8 +32,10 @@ class Lock::File
     def libc
       @libc ||= begin
         globs = %w[
-          /lib/libc.so.*                    /usr/lib/libc.so.*
-          /lib/x86_64-linux-gnu/libc.so.*   /lib/i386-linux-gnu/libc.so.*
+          /lib/libc.so.*
+          /usr/lib/libc.so.*
+          /lib/x86_64-linux-gnu/libc.so.*
+          /lib/i386-linux-gnu/libc.so.*
         ]
         Fiddle.dlopen(Dir[*globs].first)
       end
