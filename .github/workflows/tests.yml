@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        ruby: [3.2]
+        os: [ubuntu-latest, macos-latest]
+        ruby: [3.2, 3.3]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
