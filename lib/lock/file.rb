@@ -1,6 +1,10 @@
 module Lock
 end unless defined?(Lock)
 
+##
+# {Lock::File Lock::File} provides an object-oriented
+# [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
+# interface
 class Lock::File
   require "tmpdir"
   require_relative "file/version"
