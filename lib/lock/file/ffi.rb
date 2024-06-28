@@ -27,10 +27,17 @@ class Lock::File
        .zero? || raise(SystemCallError.new("lockf", Fiddle.last_error))
     end
 
-    private
-
+    ##
+    # @return [Fiddle::Handle]
     def libc
-      @libc ||= Fiddle.dlopen Dir["/lib/libc.*"].first
+      @libc ||= begin
+        globs = %w[
+          /lib/libc.so.* /usr/lib/libc.so.*
+          /usr/*/libc.so.* /usr/lib/libSystem.dylib
+          /usr/local/lib/libSystem.dylib
+        ]
+        Fiddle.dlopen(Dir[*globs].first)
+      end
     end
   end
 end
