@@ -1,17 +1,18 @@
-require "lockf"
+#!/usr/bin/env ruby
+# frozen_string_literal: true
 
-lockf = LockFile.from_temporary_file
+require "lock/file"
+lockf = Lock::File.temporary_file
 lockf.lock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
-pid = fork do
+fork do
   print "Child process waiting on lock (#{Time.now.utc})", "\n"
   lockf.lock
   print "Lock acquired by child process (#{Time.now.utc})", "\n"
 end
 sleep(3)
 lockf.release
-Process.wait(pid)
-lockf.close
+Process.wait
 
 ##
 # Lock acquired by parent process (2023-02-11 16:43:15 UTC)

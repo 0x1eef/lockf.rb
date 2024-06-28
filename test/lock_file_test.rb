@@ -1,11 +1,13 @@
+# frozen_string_literal: true
 require_relative "setup"
-class LockFile::Test < Test::Unit::TestCase
+
+class Lock::File::Test < Test::Unit::TestCase
   attr_reader :file
   attr_reader :lockf
 
   def setup
     @file = Tempfile.new("lockf-test").tap(&:unlink)
-    @lockf = LockFile.new(file)
+    @lockf = Lock::File.new(file)
   end
 
   def teardown
@@ -15,7 +17,7 @@ class LockFile::Test < Test::Unit::TestCase
   ##
   # LockFile#lock
   def test_lock
-    assert_equal 0, lockf.lock
+    assert_equal true, lockf.lock
   ensure
     lockf.release
   end
@@ -32,7 +34,7 @@ class LockFile::Test < Test::Unit::TestCase
   ##
   # LockFile#lock_nonblock
   def test_lock_nonblock
-    assert_equal 0, lockf.lock_nonblock
+    assert_equal true, lockf.lock_nonblock
   ensure
     lockf.release
   end
@@ -60,9 +62,9 @@ class LockFile::Test < Test::Unit::TestCase
   ##
   # LockFile.temporary_file
   def test_temporary_file
-    lockf = LockFile.temporary_file
-    assert_equal 0, lockf.lock
-    assert_equal 0, lockf.release
+    lockf = Lock::File.temporary_file
+    assert_equal true, lockf.lock
+    assert_equal true, lockf.release
   ensure
     lockf.file.close
   end
