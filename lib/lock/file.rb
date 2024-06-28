@@ -52,11 +52,11 @@ class Lock::File
   ##
   # Acquire lock (blocking)
   #
-  # @raise [Errno::EBADF]
-  # @raise [Errno::EDEADLK]
-  # @raise [Errno::EINTR]
-  # @raise [Errno::ENOLCK]
+  # @see https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3 lockf(3)
+  # @raise [SystemCallError]
+  #  Might raise a subclass of SystemCallError
   # @return [Boolean]
+  #  Returns true when successful
   def lock
     tries ||= 0
     lockf(@file, F_LOCK, @size)
@@ -68,11 +68,11 @@ class Lock::File
   ##
   # Acquire lock (non-blocking)
   #
-  # @raise [Errno::EAGAIN]
-  # @raise [Errno::EBADF]
-  # @raise [Errno::ENOLCK]
-  # @raise [Errno::EINVAL]
-  # @return [Integer]
+  # @see https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3 lockf(3)
+  # @raise [SystemCallError]
+  #  Might raise a subclass of SystemCallError
+  # @return [Boolean]
+  #  Returns true when successful
   def lock_nonblock
     lockf(@file, F_TLOCK, @size)
   end
@@ -80,9 +80,11 @@ class Lock::File
   ##
   # Release lock
   #
-  # @raise [Errno::EBADF]
-  # @raise [Errno::ENOLCK]
-  # @return [Integer]
+  # @see https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3 lockf(3)
+  # @raise [SystemCallError]
+  #  Might raise a subclass of SystemCallError
+  # @return [Boolean]
+  #  Returns true when successful
   def release
     lockf(@file, F_ULOCK, @size)
   end
