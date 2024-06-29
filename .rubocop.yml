@@ -14,6 +14,14 @@ Layout/MultilineMethodCallIndentation:
   Enabled: false
 Layout/ArgumentAlignment:
   Enabled: false
+Layout/MultilineArrayBraceLayout:
+  Enabled: false
+Layout/ExtraSpacing:
+  Enabled: false
+Style/MultilineIfModifier:
+  Enabled: false
+Layout/ArrayAlignment:
+  Enabled: false
 
 ##
 # Options for all cops.
@@ -23,3 +31,4 @@ AllCops:
     - lib/*.rb
     - lib/**/*.rb
     - test/*.rb
+    - share/lockf.rb/examples/*.rb
