@@ -20,4 +20,4 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
     - run: bundle install
-    - run: ruby -S rake
+    - run: ruby -S rake ci
