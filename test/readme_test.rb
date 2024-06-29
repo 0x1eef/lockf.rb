@@ -6,17 +6,17 @@ require "test/cmd"
 class Lock::File::ReadmeTest < Test::Unit::TestCase
   def test_lockfile_blocking_variant
     r = ruby(readme_example("1_lock_file_blocking_variant.rb"))
-    ["Lock acquired by parent process \(.+\)\n",
-     "Child process waiting on lock \(.+\)\n",
-     "Lock acquired by child process \(.+\)\n"
+    ["Lock acquired by parent process (.+)\n",
+     "Child process waiting on lock (.+)\n",
+     "Lock acquired by child process (.+)\n"
     ].each { assert_match Regexp.new(_1), r.stdout }
   end
 
   def test_lockfile_nonblocking_variant
     r = ruby(readme_example("2_lock_file_nonblocking_variant.rb"))
-    ["Lock acquired by parent process \(.+\)\n",
+    ["Lock acquired by parent process (.+)\n",
      "(Lock would block\n){3,4}",
-     "Lock acquired by child process \(.+\)\n"
+     "Lock acquired by child process (.+)\n"
     ].each { assert_match Regexp.new(_1), r.stdout }
   end
 

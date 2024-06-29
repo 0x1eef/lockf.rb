@@ -57,7 +57,7 @@ class Lock::File
     lockf(@file, F_LOCK, @size)
   rescue Errno::EINTR => ex
     tries += 1
-    tries == 3 ? raise(ex) : retry
+    (tries == 3) ? raise(ex) : retry
   end
 
   ##
