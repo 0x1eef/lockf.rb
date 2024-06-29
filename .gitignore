@@ -1,10 +1,4 @@
-*.so
-*.o
-*.lock
-Makefile
-tmp/
-pkg/
-*~
-.yardoc/
-.gems/
-doc/
+/*.lock
+/.yardoc/
+/.gems/
+/doc/
