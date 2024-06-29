@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency "fiddle", "~> 1.1"
   gem.add_development_dependency "yard", "~> 0.9"
-  gem.add_development_dependency "standard", "~> 1.12"
+  gem.add_development_dependency "standard", "~> 1.39"
   gem.add_development_dependency "rubocop", "~> 1.29"
   gem.add_development_dependency "test-unit", "~> 3.5"
   gem.add_development_dependency "test-cmd.rb", "~> 0.12"
