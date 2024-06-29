@@ -5,7 +5,7 @@ require "test/cmd"
 
 class Lock::File::ReadmeTest < Test::Unit::TestCase
   def test_lockfile_blocking_variant
-    r = ruby(readme_example("1_lockfile_blocking_variant.rb"))
+    r = ruby(readme_example("1_lock_file_blocking_variant.rb"))
     ["Lock acquired by parent process \(.+\)\n",
      "Child process waiting on lock \(.+\)\n",
      "Lock acquired by child process \(.+\)\n"
@@ -13,7 +13,7 @@ class Lock::File::ReadmeTest < Test::Unit::TestCase
   end
 
   def test_lockfile_nonblocking_variant
-    r = ruby(readme_example("2_lockfile_nonblocking_variant.rb"))
+    r = ruby(readme_example("2_lock_file_nonblocking_variant.rb"))
     ["Lock acquired by parent process \(.+\)\n",
      "(Lock would block\n){3,4}",
      "Lock acquired by child process \(.+\)\n"
@@ -22,12 +22,12 @@ class Lock::File::ReadmeTest < Test::Unit::TestCase
 
   def test_ffi_lockf_blocking_variant
     assert_equal "Lock acquired\nLock released\n",
-                 ruby(readme_example("3_ffilockf_blocking_variant.rb")).stdout
+                 ruby(readme_example("3_ffi_lockf_blocking_variant.rb")).stdout
   end
 
   def test_ffi_lockf_nonblocking_variant
     assert_equal "Lock acquired\nLock released\n",
-                 ruby(readme_example("4_ffilockf_nonblocking_variant.rb")).stdout
+                 ruby(readme_example("4_ffi_lockf_nonblocking_variant.rb")).stdout
   end
 
   private
