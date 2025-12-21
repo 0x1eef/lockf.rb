@@ -7,7 +7,11 @@ Gem::Specification.new do |gem|
   gem.homepage = "https://github.com/0x1eef/lockf.rb#readme"
   gem.version = Lock::File::VERSION
   gem.licenses = ["0BSD"]
-  gem.files = `git ls-files`.split($/)
+  gem.files = Dir[
+    "README.md", "LICENSE", 
+    "Rakefile.rb", "lib/*.rb", 
+    "lib/**/*.rb", "share/lockf.rb/examples/*.rb"
+  ]
   gem.require_paths = ["lib"]
   gem.summary = "Ruby bindings for lockf(3)"
   gem.description = gem.summary
