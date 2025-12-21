@@ -50,11 +50,11 @@ class Lock::File::Test < Test::Unit::TestCase
   end
 
   ##
-  # LockFile#locked?
-  def test_locked?
+  # LockFile#lockable?
+  def test_lockable?
     pid = fork_sleep { lockf.lock }
     sleep(0.1)
-    assert_equal true, lockf.locked?
+    assert_equal false, lockf.lockable?
   ensure
     Process.kill("KILL", pid)
     lockf.release

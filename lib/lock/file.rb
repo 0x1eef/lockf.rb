@@ -15,12 +15,10 @@ class Lock::File
 
   ##
   # Accepts the same parameters as Tempfile.new
-  #
   # @example
   #  lockf = Lock::File.temporary_file
   #  lockf.lock
   #  # ...
-  #
   # @return [Lock::File]
   #  Returns a {Lock::File Lock::File} for a random,
   #  unlinked temporary file
@@ -46,57 +44,49 @@ class Lock::File
 
   ##
   # Acquire lock (blocking)
-  #
   # @see https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3 lockf(3)
   # @raise [SystemCallError]
   #  Might raise a subclass of SystemCallError
   # @return [Boolean]
   #  Returns true when successful
   def lock
-    tries ||= 0
-    lockf(@file, F_LOCK, @size)
-  rescue Errno::EINTR => ex
-    tries += 1
-    (tries == 3) ? raise(ex) : retry
+    try(function: F_LOCK)
   end
 
   ##
   # Acquire lock (non-blocking)
-  #
   # @see https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3 lockf(3)
   # @raise [SystemCallError]
   #  Might raise a subclass of SystemCallError
   # @return [Boolean]
   #  Returns true when successful
   def lock_nonblock
-    lockf(@file, F_TLOCK, @size)
+    try(function: F_TLOCK)
   end
 
   ##
   # Release lock
-  #
   # @see https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3 lockf(3)
   # @raise [SystemCallError]
   #  Might raise a subclass of SystemCallError
   # @return [Boolean]
   #  Returns true when successful
   def release
-    lockf(@file, F_ULOCK, @size)
+    try(function: F_ULOCK)
   end
 
   ##
   # @return [Boolean]
-  #  Returns true when lock is held by another process
-  def locked?
-    lockf(@file, F_TEST, @size)
-    false
-  rescue Errno::EACCES, Errno::EAGAIN
+  #  Returns true when lock can be acquired
+  def lockable?
+    try(function: F_TEST)
     true
+  rescue Errno::EACCES, Errno::EAGAIN
+    false
   end
 
   ##
   # Closes {Lock::File#file Lock::File#file}
-  #
   # @example
   #  # Equivalent to:
   #  lockf = Lock::File.temporary_file
@@ -105,5 +95,14 @@ class Lock::File
   def close
     return unless @file.respond_to?(:close)
     @file.close
+  end
+
+  private
+
+  def try(function: F_LOCK, attempts: 3)
+    lockf(@file, function, @size)
+  rescue Errno::EINTR => ex
+    attempts -= 1
+    (attempts == 0) ? raise(ex) : retry
   end
 end
