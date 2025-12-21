@@ -7,12 +7,17 @@ Gem::Specification.new do |gem|
   gem.homepage = "https://github.com/0x1eef/lockf.rb#readme"
   gem.version = Lock::File::VERSION
   gem.licenses = ["0BSD"]
-  gem.files = `git ls-files`.split($/)
+  gem.files = Dir[
+    "README.md", "LICENSE", 
+    "Rakefile.rb", "lib/*.rb", 
+    "lib/**/*.rb", "share/lockf.rb/examples/*.rb"
+  ]
   gem.require_paths = ["lib"]
   gem.summary = "Ruby bindings for lockf(3)"
   gem.description = gem.summary
 
   gem.add_runtime_dependency "fiddle", "~> 1.1"
+  gem.add_development_dependency "rake", "= 13.0.6"
   gem.add_development_dependency "yard", "~> 0.9"
   gem.add_development_dependency "standard", "~> 1.39"
   gem.add_development_dependency "rubocop", "~> 1.29"
