@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.description = gem.summary
 
   gem.add_runtime_dependency "fiddle", "~> 1.1"
+  gem.add_development_dependency "rake", "~> 13.3"
   gem.add_development_dependency "yard", "~> 0.9"
   gem.add_development_dependency "standard", "~> 1.39"
   gem.add_development_dependency "rubocop", "~> 1.29"
