@@ -26,6 +26,13 @@ case after fork(2).
 To the best of my knowledge, Ruby does not provide built-in support for
 lockf(3) so the library fills that gap.
 
+## Features
+
+* Pure Ruby bindings with zero dependencies outside Ruby's standard library
+* Temporary locks backed by Tempfile
+* Blocking and non-blocking locks
+* Low-level abstraction
+
 ## Examples
 
 ### Lock::File
