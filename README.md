@@ -1,7 +1,30 @@
 ## About
 
-lockf.rb provides Ruby bindings for
-[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3).
+lockf.rb offers Ruby bindings for the advisory-mode lock
+provided by the
+[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
+function. It is similar to flock(2) in spirit but it also has semantic 
+differences that can be desirable when used across the fork(2) boundary 
+and that is usually the main reason to use this library.
+
+## Background
+
+The primary difference between lockf(3) and flock(2) in practical terms 
+is that locks created with lockf(3) persist across fork(2). That is to 
+say, if a parent process acquires a lock and then forks a child process, 
+the child process will have to wait until the parent process releases 
+the lock before it can acquire the same lock. This is not the case with 
+flock(2).
+
+The technical explanation is that lockf(3) creates a lock that is owned
+by the process rather than the open file description (as is the case with 
+flock(2)). Since a lock belongs to the process, it cannot be acquired
+by more than one process at a time, and with flock(2) a lock can be 
+acquired as long as the open file description is different, which is the
+case after fork(2). 
+
+To the best of my knowledge, Ruby does not provide built-in support for
+lockf(3) so the library fills that gap.
 
 ## Examples
 
