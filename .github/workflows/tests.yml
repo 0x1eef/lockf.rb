@@ -35,3 +35,4 @@ jobs:
           mdo -u root pkg-static install -y ruby rubygem-bundler
           bundle install
           bundle exec rake ci
+          
