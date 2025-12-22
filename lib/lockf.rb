@@ -150,4 +150,3 @@ class Lockf
     (attempts == 0) ? raise(ex) : retry
   end
 end
-
