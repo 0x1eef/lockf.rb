@@ -26,7 +26,8 @@ class Lock::File
     require "tempfile" unless defined?(Tempfile)
     Lock::File.new Tempfile.new(...).tap(&:unlink)
   end
-
+  alias_method :anonymous, :temporary_file
+  
   ##
   # @return [<#fileno>]
   #  Returns a file handle
@@ -76,12 +77,54 @@ class Lock::File
   end
 
   ##
+  # Acquire a blocking lock, yield, and finally release  the lock
+  # @example
+  #  lockf = Lock::File.temporary_file
+  #  lockf.synchronize do
+  #    # critical section
+  #  end
+  # @raise [SystemCallError]
+  #  Might raise a subclass of SystemCallError
+  # @return [Object]
+  #  Returns the return value of the block
+  def synchronize
+    locked = false
+    lock
+    locked = true
+    yield
+  ensure
+    release if locked
+  end
+
+  ##
+  # Acquire a non-blocking lock, yield, and finally release the lock
+  # @note
+  #  If the lock cannot be acquired, an exception is raised immediately
+  # @example
+  #  lockf = Lock::File.temporary_file
+  #  lockf.synchronize! do
+  #    # critical section
+  #  end
+  # @raise [SystemCallError]
+  #  Might raise a subclass of SystemCallError
+  # @return [Object]
+  #  Returns the return value of the block
+  def synchronize!
+    locked = false
+    lock_nonblock
+    locked = true
+    yield
+  ensure
+    release if locked
+  end
+
+  ##
   # @return [Boolean]
   #  Returns true when lock can be acquired
   def lockable?
     try(function: F_TEST)
     true
-  rescue Errno::EACCES, Errno::EAGAIN
+  rescue Errno::EACCES, Errno::EAGAIN, Errno::EWOULDBLOCK
     false
   end
 
@@ -93,8 +136,7 @@ class Lock::File
   #  lockf.file.close
   # @return [void]
   def close
-    return unless @file.respond_to?(:close)
-    @file.close
+    @file.respond_to?(:close) ? @file.close : nil
   end
 
   private
