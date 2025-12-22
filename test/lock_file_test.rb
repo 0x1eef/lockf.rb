@@ -2,13 +2,13 @@
 
 require_relative "setup"
 
-class Lock::File::Test < Test::Unit::TestCase
+class Lockf::Test < Test::Unit::TestCase
   attr_reader :file
   attr_reader :lockf
 
   def setup
     @file = Tempfile.new("lockf-test").tap(&:unlink)
-    @lockf = Lock::File.new(file)
+    @lockf = Lockf.new(file)
   end
 
   def teardown
@@ -63,7 +63,7 @@ class Lock::File::Test < Test::Unit::TestCase
   ##
   # LockFile.temporary_file
   def test_temporary_file
-    lockf = Lock::File.temporary_file
+    lockf = Lockf.temporary_file
     assert_equal true, lockf.lock
     assert_equal true, lockf.release
   ensure

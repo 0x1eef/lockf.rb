@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Lock::File
+class Lockf
   # The constants found in this module are defined
   # by unistd.h. Their documentation can be found in
   # the

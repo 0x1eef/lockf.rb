@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "lock/file"
+require "lockf"
 require "tempfile"
 file = Tempfile.new("lockf-ffi").tap(&:unlink)
-Lock::File::FFI.lockf(file, Lock::File::F_TLOCK, 0)
+Lockf::FFI.lockf(file, Lockf::F_TLOCK, 0)
 print "Lock acquired", "\n"
-Lock::File::FFI.lockf(file, Lock::File::F_ULOCK, 0)
+Lockf::FFI.lockf(file, Lockf::F_ULOCK, 0)
 print "Lock released", "\n"
 file.close
 

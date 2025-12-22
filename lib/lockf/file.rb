@@ -2,10 +2,10 @@ module Lock
 end unless defined?(Lock)
 
 ##
-# {Lock::File Lock::File} provides an object-oriented
+# {Lockf Lockf} provides an object-oriented
 # [lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
 # interface
-class Lock::File
+class Lockf
   require_relative "file/version"
   require_relative "file/ffi"
   require_relative "file/constants"
@@ -16,15 +16,15 @@ class Lock::File
   ##
   # Accepts the same parameters as Tempfile.new
   # @example
-  #  lockf = Lock::File.temporary_file
+  #  lockf = Lockf.temporary_file
   #  lockf.lock
   #  # ...
-  # @return [Lock::File]
-  #  Returns a {Lock::File Lock::File} for a random,
+  # @return [Lockf]
+  #  Returns a {Lockf Lockf} for a random,
   #  unlinked temporary file
   def self.temporary_file(...)
     require "tempfile" unless defined?(Tempfile)
-    Lock::File.new Tempfile.new(...).tap(&:unlink)
+    Lockf.new Tempfile.new(...).tap(&:unlink)
   end
 
   class << self
@@ -41,8 +41,8 @@ class Lock::File
   ##
   # @param [<#fileno>] file
   # @param [Integer] size
-  # @return [Lock::File]
-  #  Returns an instance of {Lock::File Lock::File}
+  # @return [Lockf]
+  #  Returns an instance of {Lockf Lockf}
   def initialize(file, size = 0)
     @file = file
     @size = size
@@ -84,7 +84,7 @@ class Lock::File
   ##
   # Acquire a blocking lock, yield, and finally release  the lock
   # @example
-  #  lockf = Lock::File.temporary_file
+  #  lockf = Lockf.temporary_file
   #  lockf.synchronize do
   #    # critical section
   #  end
@@ -106,7 +106,7 @@ class Lock::File
   # @note
   #  If the lock cannot be acquired, an exception is raised immediately
   # @example
-  #  lockf = Lock::File.temporary_file
+  #  lockf = Lockf.temporary_file
   #  lockf.synchronize! do
   #    # critical section
   #  end
@@ -134,10 +134,10 @@ class Lock::File
   end
 
   ##
-  # Closes {Lock::File#file Lock::File#file}
+  # Closes {Lockf#file Lockf#file}
   # @example
   #  # Equivalent to:
-  #  lockf = Lock::File.temporary_file
+  #  lockf = Lockf.temporary_file
   #  lockf.file.close
   # @return [void]
   def close
