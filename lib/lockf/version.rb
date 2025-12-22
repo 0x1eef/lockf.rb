@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class Lock::File
+class Lockf
   VERSION = "2.1.0"
 end

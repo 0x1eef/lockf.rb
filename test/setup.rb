@@ -1,4 +1,4 @@
 require "bundler/setup"
 require "test/unit"
-require "lock/file"
+require "lockf"
 require "tempfile"

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "lock/file"
-lockf = Lock::File.temporary_file
+require "lockf"
+lockf = Lockf.temporary_file
 lockf.lock_nonblock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 fork do

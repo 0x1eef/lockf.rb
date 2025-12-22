@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Lock::File
+class Lockf
   module FFI
     require "fiddle"
     include Fiddle::Types

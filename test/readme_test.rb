@@ -3,7 +3,7 @@
 require_relative "setup"
 require "test/cmd"
 
-class Lock::File::ReadmeTest < Test::Unit::TestCase
+class Lockf::ReadmeTest < Test::Unit::TestCase
   def test_lockfile_blocking_variant
     r = ruby(readme_example("1_lock_file_blocking_variant.rb"))
     ["Lock acquired by parent process (.+)\n",
