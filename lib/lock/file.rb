@@ -26,7 +26,7 @@ class Lock::File
     require "tempfile" unless defined?(Tempfile)
     Lock::File.new Tempfile.new(...).tap(&:unlink)
   end
-  
+
   class << self
     alias_method :anonymous, :temporary_file
   end
