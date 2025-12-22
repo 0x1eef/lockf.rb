@@ -1,4 +1,4 @@
-require_relative "lib/lockfile"
+require_relative "lib/lockf/version"
 
 Gem::Specification.new do |gem|
   gem.name = "lockf.rb"
