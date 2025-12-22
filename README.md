@@ -35,12 +35,21 @@ lockf(3) so the library fills that gap.
 
 ## Examples
 
-### Blocking
+### Synchronization
 
-The following example creates an anonymous lock that is backed
-by an unlinked, randomly named temporary file. The lock attempt
-will block until the lock can be acquired, and each process that
-is spawned by the parent process will acquire the lock serially:
+#### Synchronize
+
+The `synchronize` and `synchronize!` methods provide both a locking,
+and non-blocking lock that is released automatically when the
+block yields and returns control to the caller. The non-blocking
+form (`synchronize!`) raises a subclass of SystemCallError if the
+lock cannot be acquired right away. 
+
+With all that said, the next example uses the blocking-form of
+these two methods, the synchronize method, to create a critical 
+section that is executed serially by multiple processes. The example 
+creates an "anonymous" lock that is backed by an unlinked, randomly 
+named temporary file:
 
 ```ruby
 #!/usr/bin/env ruby
@@ -62,7 +71,7 @@ end
 # ...
 ```
 
-### Non-blocking
+#### Procedural
 
 The next example creates an anonymous lock whose acquisition
 will not block. If the lock cannot be acquired, a subclass of
