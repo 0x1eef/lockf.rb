@@ -35,9 +35,7 @@ lockf(3) so the library fills that gap.
 
 ## Examples
 
-### Lockf
-
-__Blocking__
+### Blocking
 
 The following example creates an anonymous lock that is backed
 by an unlinked, randomly named temporary file. The lock attempt
@@ -64,7 +62,7 @@ end
 # ...
 ```
 
-__Non-blocking__
+### Non-blocking
 
 The next example creates an anonymous lock whose acquisition
 will not block. If the lock cannot be acquired, a subclass of
