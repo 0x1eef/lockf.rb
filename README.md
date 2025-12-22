@@ -35,7 +35,7 @@ lockf(3) so the library fills that gap.
 
 ## Examples
 
-### Lock::File
+### Lockf
 
 __Blocking__
 
@@ -97,33 +97,6 @@ Process.wait
 # Lock acquired by child process (2023-02-11 19:03:08 UTC)
 ```
 
-### Lock::File::FFI
-
-__lockf__
-
-[Lock::File::FFI.lockf](http://0x1eef.freebsd.home.network/x/lockf.rb/Lock/File/FFI.html#lockf-instance_method)
-provides a direct interface to
-[lockf(3)](https://man.freebsd.org/cgi/man.cgi?query=lockf&sektion=3)
-that is more or less equivalent to how the function would be called
-from C:
-
-```ruby
-#!/usr/bin/env ruby
-require "lockf"
-require "tempfile"
-
-file = Tempfile.new("lockf-ffi").tap(&:unlink)
-Lockf::FFI.lockf(file, Lock::File::F_LOCK, 0)
-print "Lock acquired", "\n"
-Lockf::FFI.lockf(file, Lock::File::F_ULOCK, 0)
-print "Lock released", "\n"
-file.close
-
-##
-# Lock acquired
-# Lock released
-```
-
 ## Documentation
 
 A complete API reference is available at
@@ -137,8 +110,8 @@ lockf.rb can be installed via rubygems.org:
 
 ## Sources
 
-* [GitHub](https://github.com/0x1eef/lockf.rb#readme)
-* [GitLab](https://gitlab.com/0x1eef/lockf.rb#about)
+* [github.com/@0x1eef](https://github.com/0x1eef/lockf.rb#readme)
+* [gitlab.com/@0x1eef](https://gitlab.com/0x1eef/lockf.rb#about)
 
 ## License
 
