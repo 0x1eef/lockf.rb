@@ -46,7 +46,7 @@ is spawned by the parent process will acquire the lock serially:
 #!/usr/bin/env ruby
 require "lockf"
 
-lockf = Lockf.anonymous
+lockf = Lockf.temporary
 5.times do
   Process.detach fork {
     lockf.synchronize do
@@ -72,7 +72,7 @@ SystemCallError will be raised:
 #!/usr/bin/env ruby
 require "lockf"
 
-lockf = Lockf.anonymous
+lockf = Lockf.temporary
 lockf.lock_nonblock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 fork do

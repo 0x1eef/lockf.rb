@@ -28,7 +28,9 @@ class Lock::File
   end
 
   class << self
-    alias_method :anonymous, :temporary_file
+    # FIXME:
+    # Deprecate temporary_file in favor of temporary
+    alias_method :temporary, :temporary_file
   end
 
   ##
