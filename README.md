@@ -19,9 +19,9 @@ flock(2).
 The technical explanation is that lockf(3) creates a lock that is owned
 by the process rather than the open file description (as is the case with 
 flock(2)). Since a lock belongs to the process, it cannot be acquired
-by more than one process at a time, and with flock(2) a lock can be 
-acquired as long as the open file description is different, which is the
-case after fork(2). 
+by more than one process at a time, and with flock(2) the acquisition
+of a lock won't block as long as the lock is held by the same open file
+description, which is the case after fork(2).
 
 To the best of my knowledge, Ruby does not provide built-in support for
 lockf(3) so the library fills that gap.
@@ -73,9 +73,15 @@ end
 
 #### Procedural
 
-The next example creates an anonymous lock whose acquisition
-will not block. If the lock cannot be acquired, a subclass of
-SystemCallError will be raised:
+When more control over the lock and release process is required,
+the `lock`, `lock_nonblock`, and `release` methods can be used
+to acquire and release locks procedurally without a block.
+
+The following example is different from the last one in that it
+uses the procedural style, and rather than acquiring a blocking
+lock the acquire in this example is non-blocking. When the lock 
+is found to block, a system-specific subclass of SystemCallError
+will be raised:
 
 ```ruby
 #!/usr/bin/env ruby
