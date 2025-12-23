@@ -44,8 +44,8 @@ class Lockf
     #  Returns true when successful
     def lockf(fd, fn, size = 0)
       fileno = fd.respond_to?(:fileno) ? fd.fileno : fd
-      Lockf::FFI.function.call(fileno, fn, size).zero? || 
-      raise(SystemCallError.new("lockf", Fiddle.last_error))
+      Lockf::FFI.function.call(fileno, fn, size).zero? ||
+        raise(SystemCallError.new("lockf", Fiddle.last_error))
     end
 
     ##
