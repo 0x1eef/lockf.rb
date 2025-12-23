@@ -19,7 +19,7 @@ task ci: %i[format:check test]
 desc "Run tests"
 task :test do
   sh <<-SHELL
-    for t in test/test_*.rb; do 
+    for t in test/*_test.rb; do 
       bundle exec ruby ${t} || exit 1
     done
   SHELL
