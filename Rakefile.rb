@@ -18,6 +18,10 @@ task ci: %i[format:check test]
 
 desc "Run tests"
 task :test do
-  sh "bin/test-runner"
+  sh <<-SHELL
+    for t in test/test_*.rb; do 
+      bundle exec ruby ${t} || exit 1
+    done
+  SHELL
 end
 task default: %w[test]
