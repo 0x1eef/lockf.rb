@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require "lockf"
-lockf = Lockf.temporary_file
+lockf = Lockf.unlinked
 lockf.lock_nonblock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 fork do

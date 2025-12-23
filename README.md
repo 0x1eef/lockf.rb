@@ -55,7 +55,7 @@ named temporary file:
 #!/usr/bin/env ruby
 require "lockf"
 
-lockf = Lockf.temporary
+lockf = Lockf.unlinked
 5.times do
   Process.detach fork {
     lockf.synchronize do
@@ -87,7 +87,7 @@ will be raised:
 #!/usr/bin/env ruby
 require "lockf"
 
-lockf = Lockf.temporary
+lockf = Lockf.unlinked
 lockf.lock_nonblock
 print "Lock acquired by parent process (#{Time.now.utc})", "\n"
 fork do
