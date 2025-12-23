@@ -29,7 +29,7 @@ lockf(3) so the library fills that gap.
 ## Features
 
 * Pure Ruby bindings with zero dependencies outside Ruby's standard library
-* Temporary locks backed by Tempfile
+* Temporary, unlinked locks backed by a Tempfile
 * Blocking and non-blocking locks
 * Low-level abstraction
 
@@ -48,8 +48,8 @@ lock cannot be acquired right away.
 With all that said, the next example uses the blocking-form of
 these two methods, the synchronize method, to create a critical 
 section that is executed serially by multiple processes. The example 
-creates an "anonymous" lock that is backed by an unlinked, randomly 
-named temporary file:
+creates a lock that is backed by a randomly named, unlinked temporary 
+file:
 
 ```ruby
 #!/usr/bin/env ruby
