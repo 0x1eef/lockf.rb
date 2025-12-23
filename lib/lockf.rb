@@ -13,21 +13,15 @@ class Lockf
   ##
   # Accepts the same parameters as Tempfile.new
   # @example
-  #  lockf = Lockf.temporary_file
+  #  lockf = Lockf.unlinked
   #  lockf.lock
   #  # ...
   # @return [Lockf]
   #  Returns a {Lockf Lockf} for a random,
   #  unlinked temporary file
-  def self.temporary_file(...)
+  def self.unlinked(...)
     require "tempfile" unless defined?(Tempfile)
     Lockf.new Tempfile.new(...).tap(&:unlink)
-  end
-
-  class << self
-    # FIXME:
-    # Deprecate temporary_file in favor of temporary
-    alias_method :temporary, :temporary_file
   end
 
   ##
@@ -81,7 +75,7 @@ class Lockf
   ##
   # Acquire a blocking lock, yield, and finally release  the lock
   # @example
-  #  lockf = Lockf.temporary_file
+  #  lockf = Lockf.unlinked_file
   #  lockf.synchronize do
   #    # critical section
   #  end
@@ -103,7 +97,7 @@ class Lockf
   # @note
   #  If the lock cannot be acquired, an exception is raised immediately
   # @example
-  #  lockf = Lockf.temporary_file
+  #  lockf = Lockf.unlinked_file
   #  lockf.synchronize! do
   #    # critical section
   #  end
@@ -134,7 +128,7 @@ class Lockf
   # Closes {Lockf#file Lockf#file}
   # @example
   #  # Equivalent to:
-  #  lockf = Lockf.temporary_file
+  #  lockf = Lockf.unlinked_file
   #  lockf.file.close
   # @return [void]
   def close
