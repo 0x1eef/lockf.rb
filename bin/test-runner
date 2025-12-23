@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-
-for t in test/*_test.rb; do
-    ruby -Itest "${t}"
-done
