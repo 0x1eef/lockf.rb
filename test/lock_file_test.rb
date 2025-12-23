@@ -61,9 +61,9 @@ class Lockf::Test < Test::Unit::TestCase
   end
 
   ##
-  # LockFile.unlinked_file
+  # LockFile.unlinked
   def test_temporary_file
-    lockf = Lockf.unlinked_file
+    lockf = Lockf.unlinked
     assert_equal true, lockf.lock
     assert_equal true, lockf.release
   ensure

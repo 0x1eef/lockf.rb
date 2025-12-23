@@ -75,7 +75,7 @@ class Lockf
   ##
   # Acquire a blocking lock, yield, and finally release  the lock
   # @example
-  #  lockf = Lockf.unlinked_file
+  #  lockf = Lockf.unlinked
   #  lockf.synchronize do
   #    # critical section
   #  end
@@ -97,7 +97,7 @@ class Lockf
   # @note
   #  If the lock cannot be acquired, an exception is raised immediately
   # @example
-  #  lockf = Lockf.unlinked_file
+  #  lockf = Lockf.unlinked
   #  lockf.synchronize! do
   #    # critical section
   #  end
@@ -128,7 +128,7 @@ class Lockf
   # Closes {Lockf#file Lockf#file}
   # @example
   #  # Equivalent to:
-  #  lockf = Lockf.unlinked_file
+  #  lockf = Lockf.unlinked
   #  lockf.file.close
   # @return [void]
   def close
