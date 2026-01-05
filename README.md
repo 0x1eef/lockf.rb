@@ -1,4 +1,4 @@
-> **Minimal by design** <br>
+> **Minimalist design** <br>
 > This library has zero dependencies outside Ruby's standard library
 > and it is written without C extensions.
 
