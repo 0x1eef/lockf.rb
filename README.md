@@ -59,8 +59,9 @@ pids  = []
 lockf = Lockf.unlinked
 5.times do
   pids << fork {
+    puts "Wait for lock (pid #{Process.pid})"
     lockf.synchronize do
-      print "Lock acquired (pid #{Process.pid})", "\n"
+      puts "Lock acquired (pid #{Process.pid})"
       sleep 5
     end
   }
@@ -68,8 +69,8 @@ end
 pids.each { Process.wait(it) }
 
 ##
+# Wait for lock (pid 12345)
 # Lock acquired (pid 12345)
-# Lock acquired (pid 12346)
 # ...
 ```
 
