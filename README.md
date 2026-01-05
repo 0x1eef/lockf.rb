@@ -1,3 +1,7 @@
+> **Minimal by design** <br>
+> This library has zero dependencies outside Ruby's standard library
+> and it is written without C extensions.
+
 ## About
 
 lockf.rb offers Ruby bindings for the advisory-mode lock
