@@ -1,6 +1,6 @@
-> **Minimalist design** <br>
-> This library has zero dependencies outside Ruby's standard library
-> and it is written without C extensions.
+> **Designed for minimalism** <br>
+> Zero dependencies outside Ruby’s standard library. <br>
+> No C extensions.
 
 ## About
 
